@@ -3,7 +3,6 @@ import { ServiceService } from './../../../../app/service.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,18 +14,15 @@ export class AppSideLoginComponent {
   password: string = "";
   role: number | null = null;
 
-
   login() {
     console.log(this.Username);
     this.service.Getloggeduser(this.Username, this.password).subscribe(response => {
 
       console.log(response); 
 
-     
       const responseString = JSON.stringify(response);
       console.log('Response as string:', responseString);
 
-     
       const responseParts = responseString.split(',');
 
       for (const part of responseParts) {
@@ -34,11 +30,11 @@ export class AppSideLoginComponent {
           const roleValue = part.split(':')[1].trim(); 
           this.role = parseInt(roleValue); 
           console.log('Extracted role:', this.role);
-          break; /
+          break; // Removed the forward slash after break
         }
       }
 
-      if ( this.role == 1) {
+      if (this.role == 1) {
         localStorage.setItem('LoggedUserName', this.Username);
         localStorage.setItem('LoggedUserType', "1");
         this.router.navigate(['/dashboard']);
@@ -47,16 +43,9 @@ export class AppSideLoginComponent {
         localStorage.setItem('LoggedUserName', this.Username);
         localStorage.setItem('LoggedUserType', "2");
         this.router.navigate(['/dashboard']);
+      } else {
+        Swal.fire('', 'Login Failed!', 'error');
       }
-
-
-      else {
-        Swal.fire('', 'Login Failed !', 'error');
-        
-      }
-
     });
   }
-
-
 }

@@ -1,4 +1,4 @@
-//Check Login
+-- Check Login Procedure
 CREATE PROCEDURE [dbo].[ARGetUserAuthority]
     @Username NVARCHAR(100),  -- Adjust the size according to your database schema
     @Password NVARCHAR(100)    -- Adjust the size according to your database schema
@@ -18,28 +18,24 @@ BEGIN
         IF @UserType = 'customer'
         BEGIN
             SET @result = 1;  -- User is a customer
-
-			Select @result
+            SELECT @result;
         END
         ELSE IF @UserType = 'restaurant'
         BEGIN
-            SET @result = 2;
-			Select @result-- User is a restaurant owner
+            SET @result = 2;  -- User is a restaurant owner
+            SELECT @result;
         END
     END
     ELSE
     BEGIN
         SET @result = 0;  -- User does not exist
-		Select @result
+        SELECT @result;
     END
-
-  -- Return the result
-END
+END;
 GO
 
 
-
-//User Registration
+-- User Registration Procedure
 CREATE PROCEDURE [dbo].[InsertUser]
     @UserName NVARCHAR(100),
     @Password NVARCHAR(255),
@@ -83,5 +79,3 @@ BEGIN
     END CATCH
 END;
 GO
-
-
