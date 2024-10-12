@@ -20,22 +20,21 @@ export class AppSideLoginComponent {
     console.log(this.Username);
     this.service.Getloggeduser(this.Username, this.password).subscribe(response => {
 
-      console.log(response); // Log the entire response
+      console.log(response); 
 
-      // Convert the response object to a string
+     
       const responseString = JSON.stringify(response);
       console.log('Response as string:', responseString);
 
-      // Split the string on commas and process it
+     
       const responseParts = responseString.split(',');
 
-      // Use a for loop to find the role
       for (const part of responseParts) {
         if (part.includes('"role":')) {
-          const roleValue = part.split(':')[1].trim(); // Split on ':' and trim whitespace
-          this.role = parseInt(roleValue); // Convert to integer
+          const roleValue = part.split(':')[1].trim(); 
+          this.role = parseInt(roleValue); 
           console.log('Extracted role:', this.role);
-          break; // Exit loop after finding role
+          break; /
         }
       }
 
