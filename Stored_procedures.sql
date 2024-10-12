@@ -1,4 +1,3 @@
-
 //Check Login
 CREATE PROCEDURE [dbo].[ARGetUserAuthority]
     @Username NVARCHAR(100),  -- Adjust the size according to your database schema
