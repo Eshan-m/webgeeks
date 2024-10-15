@@ -1,13 +1,10 @@
 <style>
-
   .logo {
-    width: 100px; 
-    
+    width: 100px;  
   }
   .blank-layout-container {
     background: linear-gradient(135deg, #ff7e5f, #feb47b); s
   }
-  
 </style>
 
 <div class="blank-layout-container justify-content-center align-items-center bg-light-primary">
@@ -19,13 +16,11 @@
         <mat-card-content class="p-32">
           <div class="text-center">
             <a [routerLink]="['/dashboard']">
-              <img src="./assets/images/logos/logo3.jpg"
+              <img src="./assets/images/logos/logo4.jpg"
                    class="logo"
                    alt="logo" />
             </a>
           </div>
-
-
           <form class="m-t-30">
             <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Name</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
@@ -54,11 +49,9 @@
                 Restaurant Owner
               </label>
             </div>
-
             <br>
             <a (click)="addUser()" [routerLink]="['/']" mat-flat-button color="primary" class="w-100">Sign Up</a>
           </form>
-
           <span class="d-block f-w-500 text-center m-t-24">
             Already have an Account?
 
