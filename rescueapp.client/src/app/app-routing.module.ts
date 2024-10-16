@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
+import { RestaurantHomeComponent } from './pages/restaurant-home/restaurant-home.component';  // Import your components
+import { AddFoodItemComponent } from './pages/restaurant-home/add-food-item.component';
+import { EditFoodItemComponent } from './pages/restaurant-home/edit-food-item.component';
 
 const routes: Routes = [
   {
@@ -11,7 +14,6 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: '/authentication/login',
-        //redirectTo: '/dashboard',
         pathMatch: 'full',
       },
       {
@@ -30,6 +32,19 @@ const routes: Routes = [
         path: 'extra',
         loadChildren: () =>
           import('./pages/extra/extra.module').then((m) => m.ExtraModule),
+      },
+      // Add the restaurant-related routes here
+      {
+        path: 'restaurant-home',
+        component: RestaurantHomeComponent,
+      },
+      {
+        path: 'add-food-item',
+        component: AddFoodItemComponent,
+      },
+      {
+        path: 'edit-food-item/:name',
+        component: EditFoodItemComponent,
       },
     ],
   },
