@@ -38,7 +38,7 @@ export class AppSideLoginComponent {
         localStorage.setItem('LoggedUserName', this.Username);
         localStorage.setItem('LoggedUserType', "1");
         this.router.navigate(['/dashboard']);
-      }
+      } else 
       if (this.role == 2) {
         localStorage.setItem('LoggedUserName', this.Username);
         localStorage.setItem('LoggedUserType', "2");
