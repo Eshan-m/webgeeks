@@ -1,11 +1,11 @@
 import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
+  //{
+    //navCap: 'Home',
+  //},
   {
-    navCap: 'Home',
-  },
-  {
-    displayName: 'Dashboard',
+    displayName: 'HOME',
     iconName: 'layout-dashboard',
     route: '/dashboard',
   },
