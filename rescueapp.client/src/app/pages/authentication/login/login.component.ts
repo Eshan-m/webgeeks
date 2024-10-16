@@ -30,7 +30,7 @@ export class AppSideLoginComponent {
           const roleValue = part.split(':')[1].trim(); 
           this.role = parseInt(roleValue); 
           console.log('Extracted role:', this.role);
-          break; // Removed the forward slash after break
+          
         }
       }
 
