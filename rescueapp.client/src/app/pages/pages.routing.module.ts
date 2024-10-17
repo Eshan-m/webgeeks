@@ -3,6 +3,7 @@ import { AppDashboardComponent } from './dashboard/dashboard.component';
 import { RestaurantHomeComponent } from './restaurant-home/restaurant-home.component';
 import { AddFoodItemComponent } from './restaurant-home/add-food-item.component';
 import { EditFoodItemComponent } from './restaurant-home/edit-food-item.component';
+import { HomeComponent } from './home/home.component';
 
 export const PagesRoutes: Routes = [
   {
