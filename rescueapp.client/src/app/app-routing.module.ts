@@ -5,6 +5,7 @@ import { FullComponent } from './layouts/full/full.component';
 import { RestaurantHomeComponent } from './pages/restaurant-home/restaurant-home.component';  // Import your components
 import { AddFoodItemComponent } from './pages/restaurant-home/add-food-item.component';
 import { EditFoodItemComponent } from './pages/restaurant-home/edit-food-item.component';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   {
@@ -13,7 +14,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/authentication/login',
+        redirectTo: 'home',
         pathMatch: 'full',
       },
       {

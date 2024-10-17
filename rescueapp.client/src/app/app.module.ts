@@ -34,6 +34,8 @@ import { RestaurantHomeComponent } from './pages/restaurant-home/restaurant-home
 import { AddFoodItemComponent } from './pages/restaurant-home/add-food-item.component';
 import { EditFoodItemComponent } from './pages/restaurant-home/edit-food-item.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +49,7 @@ import { EditFoodItemComponent } from './pages/restaurant-home/edit-food-item.co
     RestaurantHomeComponent,
     AddFoodItemComponent,
     EditFoodItemComponent,
+ 
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,7 @@ import { EditFoodItemComponent } from './pages/restaurant-home/edit-food-item.co
     TablerIconsModule.pick(TablerIcons),
     NgScrollbarModule,
     MatInputModule,
-    MatRadioModule,
+    MatRadioModule
   ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],
