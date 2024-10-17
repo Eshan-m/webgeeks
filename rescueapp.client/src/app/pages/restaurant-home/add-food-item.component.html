@@ -1,0 +1,23 @@
+<div class="add-food-item">
+    <h1>Add New Food Item</h1>
+  
+    <form (submit)="onSubmit()">
+      <label for="name">Food Name</label>
+      <input id="name" [(ngModel)]="foodItem.name" name="name" required>
+  
+      <label for="quantity">Quantity</label>
+      <input id="quantity" type="number" [(ngModel)]="foodItem.quantity" name="quantity" required>
+  
+      <label for="expiry">Expiration Date</label>
+      <input id="expiry" type="date" [(ngModel)]="foodItem.expiry" name="expiry" required>
+  
+      <label for="condition">Condition</label>
+      <select id="condition" [(ngModel)]="foodItem.condition" name="condition" required>
+        <option value="fresh">Fresh</option>
+        <option value="near-expiry">Near Expiry</option>
+      </select>
+  
+      <button type="submit">Add Food Item</button>
+    </form>
+  </div>
+  
