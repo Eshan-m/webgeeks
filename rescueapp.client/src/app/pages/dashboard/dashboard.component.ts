@@ -23,6 +23,7 @@ import {
   ApexResponsive,
   NgApexchartsModule,
 } from 'ng-apexcharts';
+import { RouterModule } from '@angular/router';  // Import RouterModule
 
 interface month {
   value: string;
@@ -129,6 +130,7 @@ const ELEMENT_DATA: mealsData[] = [
     NgApexchartsModule,
     MatTableModule,
     CommonModule,
+    RouterModule,  // Import RouterModule to use routerLink
   ],
 })
 export class AppDashboardComponent {
