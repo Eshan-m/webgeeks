@@ -36,6 +36,7 @@ import { EditFoodItemComponent } from './pages/restaurant-home/edit-food-item.co
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +49,7 @@ import { EditFoodItemComponent } from './pages/restaurant-home/edit-food-item.co
     // Declare the new components
     RestaurantHomeComponent,
     AddFoodItemComponent,
-    EditFoodItemComponent,
+    EditFoodItemComponent
  
   ],
   imports: [
