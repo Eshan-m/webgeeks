@@ -4,6 +4,7 @@ import { RestaurantHomeComponent } from './restaurant-home/restaurant-home.compo
 import { AddFoodItemComponent } from './restaurant-home/add-food-item.component';
 import { EditFoodItemComponent } from './restaurant-home/edit-food-item.component';
 import { HomeComponent } from './home/home.component';
+import { FoodlistComponent } from './foodlist/foodlist.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -32,6 +33,13 @@ export const PagesRoutes: Routes = [
     component: EditFoodItemComponent,
     data: {
       title: 'Edit Food Item',
+    },
+  },
+  {
+    path: 'foodlist',
+    component: FoodlistComponent,
+    data: {
+      title: 'Food List',
     },
   }
 ];
