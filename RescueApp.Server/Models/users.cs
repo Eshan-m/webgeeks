@@ -13,4 +13,15 @@ namespace RescueApp.Server.Models
         public String Password { get; set; }
         public String UserRole { get; set; }
     }
+
+
+    public class FoodItem
+    {
+        public string name { get; set; }
+        public int quantity { get; set; }
+        public string expiry { get; set; }
+        public string condition { get; set; }
+        public string user { get; set; }
+    }
+
 }
