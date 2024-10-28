@@ -5,7 +5,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[GetFoodItemsByRestaurant]
+Create PROCEDURE [dbo].[GetFoodItemsByRestaurant]
     @UserName NVARCHAR(100)
 AS
 BEGIN
