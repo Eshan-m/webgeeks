@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class ServiceService {
 
   //Base Url for API Services
-  baseUrl: string = "https://localhost:7137";
+  baseUrl: string = "https://localhost:44363";
   readonly APIUrl = this.baseUrl + "/api";
   constructor(private http: HttpClient) { }
 
@@ -22,4 +22,10 @@ export class ServiceService {
   Getloggeduser(val: any, val2: any) {
     return this.http.get(this.APIUrl + '/Getuser/' + val + '/' + val2);
   }
+
+  getFoodItems() {
+    return this.http.get(this.APIUrl + '/GetFoodItems');
+  }
+
+
 }
