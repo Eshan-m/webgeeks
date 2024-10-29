@@ -95,6 +95,41 @@ namespace RescueApp.Server.Controllers
             }
         }
 
+        // Additional method for retrieving all food items in FoodItemController
+        [HttpGet]
+        [Route("getAll")]
+        public JsonResult GetAllFoodItems()
+        {
+            string storedProc = "GetAllFoodItems"; // Stored procedure to fetch all food items
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("DevConnection");
+
+            try
+            {
+                using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+                {
+                    myCon.Open();
+                    using (SqlCommand myCommand = new SqlCommand(storedProc, myCon))
+                    {
+                        myCommand.CommandType = CommandType.StoredProcedure;
+
+                        SqlDataReader reader = myCommand.ExecuteReader();
+                        table.Load(reader);
+                        reader.Close();
+                    }
+                }
+
+                return new JsonResult(table);
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                Console.WriteLine($"Exception: {ex.Message}");
+                return new JsonResult(new { success = false, message = "An error occurred while retrieving all food items." });
+            }
+        }
+
+
         // Retrieve food items by restaurant
         [HttpGet]
         [Route("getByRestaurant/{restaurantId}")]
@@ -137,3 +172,4 @@ namespace RescueApp.Server.Controllers
         }
     }
 }
+
