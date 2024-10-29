@@ -1,6 +1,6 @@
 <div class="restaurant-home">
     <h1>Welcome to Your Food Listings</h1>
-    <p>Total Food Items: {{ totalItems }}</p>
+    <!--<p>Total Food Items: {{ totalItems }}</p>-->
   
     <div class="actions">
       <button routerLink="/add-food-item">+ Add New Food Item</button>
@@ -10,14 +10,13 @@
     <ul>
       <li *ngFor="let item of foodItems">
         <div>
-          <h2>{{ item.name }}</h2>
-          <p>Quantity: {{ item.quantity }}</p>
-          <p>Expiry: {{ item.expiry }}</p>
-          <p>Status: {{ item.status }}</p>
+          <h2>{{ item.food_name }}</h2>
+          <p>Quantity: {{ item.Quantity }}</p>
+          <p>Expiry: {{ item.expiration_date }}</p>
+          <p>Status: Nearly Expiry</p>
         </div>
         <button routerLink="/edit-food-item/{{item.name}}">Edit</button>
         <button (click)="onDelete(item)">Delete</button>
       </li>
     </ul>
   </div>
-  
