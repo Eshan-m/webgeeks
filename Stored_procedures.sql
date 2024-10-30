@@ -171,7 +171,7 @@ CREATE PROCEDURE GetAllFoodItems
 AS
 BEGIN
     SELECT * FROM FoodItems
-    ORDER BY created_at DESC; -- Optional: order by created date
+    ORDER BY CreatedAt DESC; -- Optional: order by created date
 END;
 GO
 
