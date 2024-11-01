@@ -28,7 +28,7 @@ export class ServiceService {
   getFoodItems() {
     return this.http.get(this.APIUrl + '/GetFoodItems');
   }
-
+  //Restuarant Functions (add, view)
   addFoodItem(val: any) {
     return this.http.post(this.APIUrl + '/addFoodItem', val);
   }
