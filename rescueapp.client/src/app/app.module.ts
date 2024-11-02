@@ -33,7 +33,13 @@ import { MatInputModule } from '@angular/material/input';
 import { RestaurantHomeComponent } from './pages/restaurant-home/restaurant-home.component';
 import { AddFoodItemComponent } from './pages/restaurant-home/add-food-item.component';
 import { EditFoodItemComponent } from './pages/restaurant-home/edit-food-item.component';
-
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -62,7 +68,14 @@ import { EditFoodItemComponent } from './pages/restaurant-home/edit-food-item.co
     TablerIconsModule.pick(TablerIcons),
     NgScrollbarModule,
     MatInputModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatListModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTableModule,
+    MatMenuModule,
   ],
   exports: [TablerIconsModule],
   bootstrap: [AppComponent],
