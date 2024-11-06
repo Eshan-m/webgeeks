@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using RescueApp.Server.Models;
 using System.IO;
 
-
 namespace RescueApp.Server.Controllers
 {
     [Route("api")]
@@ -23,10 +22,9 @@ namespace RescueApp.Server.Controllers
             _configuration = configuration;
         }
 
-
         [HttpPost, ActionName("insertuser")]
         [Route("insertuser")]
-        public JsonResult Insertuser(users usr)
+        public JsonResult Insertuser(User usr) // Changed 'users' to 'User'
         {
             string StoredProc2 = "exec InsertUser " +
                     "@UserName = '" + usr.UserName + "'," +
@@ -51,7 +49,6 @@ namespace RescueApp.Server.Controllers
             return new JsonResult(permission);
         }
 
-
         [HttpGet, ActionName("Getuser")]
         [Route("Getuser/{Username}/{password}")]
         public JsonResult Getuser(string Username, string password)
@@ -60,7 +57,6 @@ namespace RescueApp.Server.Controllers
             int role = -1; // Default value if no role is found
             string sqlDataSource = _configuration.GetConnectionString("DevConnection");
 
-            // Check if the connection string is null or empty
             if (string.IsNullOrEmpty(sqlDataSource))
             {
                 return new JsonResult(new { success = false, message = "Database connection string is not configured." });
@@ -73,25 +69,16 @@ namespace RescueApp.Server.Controllers
                     myCon.Open();
                     using (SqlCommand myCommand = new SqlCommand(storedProcName, myCon))
                     {
-                        myCommand.CommandType = CommandType.StoredProcedure; // Specify that we are using a stored procedure
-
-                        // Add parameters to prevent SQL injection
+                        myCommand.CommandType = CommandType.StoredProcedure;
                         myCommand.Parameters.AddWithValue("@Username", Username);
                         myCommand.Parameters.AddWithValue("@password", password);
-
-                        // Execute the command and retrieve the return value
                         object result = myCommand.ExecuteScalar();
-
-                        // Check if result is not null before casting
                         if (result != null)
                         {
-                            role = (int)result; // Cast to int if not null
+                            role = (int)result;
                         }
                         else
                         {
-
-                         
-                            // Handle case where no role is returned
                             Console.WriteLine("No role returned from stored procedure.");
                         }
                     }
@@ -99,29 +86,23 @@ namespace RescueApp.Server.Controllers
             }
             catch (SqlException ex)
             {
-                // Handle SQL exceptions
                 Console.WriteLine($"SQL Exception: {ex.Message}");
                 return new JsonResult(new { success = false, message = "Database error occurred." });
             }
             catch (Exception ex)
             {
-                // Handle general exceptions
                 Console.WriteLine($"Exception: {ex.Message}");
                 return new JsonResult(new { success = false, message = "An error occurred." });
             }
 
-            // Return the result as a JSON response
             return new JsonResult(new { success = true, role });
         }
-
-
 
         [HttpGet]
         [Route("GetFoodItems")]
         public ActionResult<IEnumerable<Dictionary<string, object>>> GetFoodItems()
         {
-            string query = "EXEC GetFoodItems"; // Your stored procedure name
-
+            string query = "EXEC GetFoodItems";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("DevConnection");
 
@@ -137,7 +118,6 @@ namespace RescueApp.Server.Controllers
                 }
             }
 
-            // Convert DataTable to List of Dictionaries
             var foodItems = new List<Dictionary<string, object>>();
             foreach (DataRow row in table.Rows)
             {
@@ -151,8 +131,6 @@ namespace RescueApp.Server.Controllers
 
             return Ok(foodItems);
         }
-
-
 
         [HttpPost, ActionName("addFoodItem")]
         [Route("addFoodItem")]
@@ -183,27 +161,19 @@ namespace RescueApp.Server.Controllers
             return new JsonResult(result);
         }
 
-
-
-
         [HttpGet]
         [Route("GetfooditemsRes/{restaurantUsername}")]
         public ActionResult<IEnumerable<Dictionary<string, object>>> GetFoodItems(string restaurantUsername)
         {
             string sqlDataSource = _configuration.GetConnectionString("DevConnection");
-
             DataTable foodItemsTable = new DataTable();
 
             using (SqlConnection myCon = new SqlConnection(sqlDataSource))
             {
                 myCon.Open();
-
-                // Use the stored procedure to get food items by restaurant username
                 using (SqlCommand cmd = new SqlCommand("GetFoodItemsByRestaurant", myCon))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    // Pass the restaurant's username as a parameter
                     cmd.Parameters.AddWithValue("@UserName", restaurantUsername);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -211,11 +181,9 @@ namespace RescueApp.Server.Controllers
                         foodItemsTable.Load(reader);
                     }
                 }
-
                 myCon.Close();
             }
 
-            // Convert DataTable to List of Dictionaries for JSON serialization
             var foodItems = new List<Dictionary<string, object>>();
             foreach (DataRow row in foodItemsTable.Rows)
             {
@@ -229,11 +197,5 @@ namespace RescueApp.Server.Controllers
 
             return Ok(foodItems);
         }
-
-
-
-
-
-
     }
 }
