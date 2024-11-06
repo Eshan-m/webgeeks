@@ -1,3 +1,4 @@
+// foodlist.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from './../../../app/service.service';
 import { Router } from '@angular/router';
@@ -18,38 +19,46 @@ export interface FoodItem {
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './foodlist.component.html',
-  styleUrls: ['./foodlist.component.scss']  // Corrected "styleUrls" with an 's'
+  styleUrls: ['./foodlist.component.scss']
 })
 export class FoodlistComponent implements OnInit {
-
-  foodItems: any = [];
+  foodItems: FoodItem[] = []; // Specify array type
+  filteredFoodItems: FoodItem[] = []; // Specify array type
   selectedFoodId: number | null = null;
   pickupQuantity: number | null = null;
-  private modalInstance: Modal | null = null; // Define a property for the modal instance
-  isModalOpen: boolean = false;  
+  private modalInstance: Modal | null = null;
+  isModalOpen: boolean = false;
+  searchQuery: string = ''; // Variable to store search input
 
   constructor(private router: Router, private service: ServiceService) { }
 
   ngOnInit(): void {
-    this.service.getFoodItems().subscribe(data => {
+    this.service.getFoodItems().subscribe((data: FoodItem[]) => {
       this.foodItems = data;
+      this.filteredFoodItems = data; // Initialize filtered items
       console.log(this.foodItems);
     });
   }
 
   openPickupModal(id: number) {
     this.selectedFoodId = id;
-    this.isModalOpen = true;  // Open the modal
+    this.isModalOpen = true;
   }
 
   confirmPickup() {
     console.log('Record ID:', this.selectedFoodId);
     console.log('Pickup Quantity:', this.pickupQuantity);
-    // Perform actions like sending the data to the backend or updating state
-    this.closeModal();  // Close the modal after confirming
+    this.closeModal();
   }
 
   closeModal() {
-    this.isModalOpen = false;  // Close the modal
+    this.isModalOpen = false;
+  }
+
+  // Method to filter food items based on search input
+  onSearch(): void {
+    this.filteredFoodItems = this.foodItems.filter(item =>
+      item.food_name.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
   }
 }

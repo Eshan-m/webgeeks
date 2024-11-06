@@ -1,7 +1,16 @@
+<!-- foodlist.component.html -->
 <div class="foodlist-container">
   <h2>Available Food Items</h2>
 
-  <table *ngIf="foodItems.length" class="styled-table">
+  <!-- Search Input -->
+  <div class="search-container">
+    <input type="text"
+           placeholder="Search Food Items"
+           [(ngModel)]="searchQuery"
+           (input)="onSearch()" />
+  </div>
+
+  <table *ngIf="filteredFoodItems.length" class="styled-table">
     <thead>
       <tr>
         <th>ID</th>
@@ -12,7 +21,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let food of foodItems">
+      <tr *ngFor="let food of filteredFoodItems">
         <td>{{ food.id }}</td>
         <td>{{ food.food_name }}</td>
         <td>{{ food.quantity }}</td>
@@ -29,14 +38,13 @@
 <div class="custom-modal" *ngIf="isModalOpen">
   <div class="custom-modal-content">
     <div class="modal-header">
-      <h5>Enter Pickup Quantity </h5>
+      <h5>Enter Pickup Quantity</h5>
       <button class="close-btn" (click)="closeModal()">×</button>
     </div>
     <div class="modal-body">
       <form>
         <div class="form-group">
-          
-          <input type="number" id="pickupQuantity" [(ngModel)]="pickupQuantity" name="pickupQuantity" required>
+          <input type="number" id="pickupQuantity" [(ngModel)]="pickupQuantity" name="pickupQuantity" required />
         </div>
       </form>
     </div>
