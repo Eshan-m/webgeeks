@@ -132,3 +132,33 @@ BEGIN
     VALUES (@Username, @Quantity, @RestaurantId, GETDATE(), @Food);
 END
 
+
+USE [DevTest]
+GO
+/****** Object:  StoredProcedure [dbo].[GetOrdersByUsername]    Script Date: 2024-11-05 7:55:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[GetOrdersByUsername]
+    @Username NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        RecId,
+        Username,
+        Quantity,
+        Restaurant_id,
+        CreatedAt,
+		FoodName
+    FROM 
+        [dbo].[Orders]
+    WHERE 
+        Username = @Username
+    ORDER BY 
+        CreatedAt DESC;
+END
+
