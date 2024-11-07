@@ -1,11 +1,11 @@
 USE [DevTest]
 GO
-/****** Object:  StoredProcedure [dbo].[GetFoodItemsByRestaurant]    Script Date: 2024-11-07 8:36:44 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetFoodItemsByRestaurant]    Script Date: 2024-10-28 2:53:50 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[GetFoodItemsByRestaurant]
+Create PROCEDURE [dbo].[GetFoodItemsByRestaurant]
     @UserName NVARCHAR(100)
 AS
 BEGIN
@@ -25,7 +25,6 @@ BEGIN
 
     -- Retrieve food items associated with the restaurant's UserId
     SELECT 
-	    id,
         food_name, 
         Quantity, 
         expiration_date
