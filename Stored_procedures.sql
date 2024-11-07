@@ -81,61 +81,120 @@ END;
 GO
 
 
+
 USE [DevTest]
 GO
-/****** Object:  StoredProcedure [dbo].[InsertOrderAndUpdateFoodItem]    Script Date: 2024-11-05 7:54:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetFoodItems]    Script Date: 2024-10-31 5:14:22 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-
-ALTER PROCEDURE [dbo].[InsertOrderAndUpdateFoodItem]
-    @Username NVARCHAR(50),
-    @FoodItemId INT,
-    @Quantity INT
+ALTER PROCEDURE [dbo].[GetFoodItems]
 AS
 BEGIN
-    SET NOCOUNT ON;
-
-    DECLARE @CurrentQuantity INT;
-    DECLARE @RestaurantId INT;
-	DeCLARE @Food varchar(50);
-
-    -- Step 1: Get the current quantity and restaurant_id from fooditems table for the given food item ID
     SELECT 
-        @CurrentQuantity = quantity, 
-        @RestaurantId = restaurant_id,
-		@Food = food_name
-    FROM [dbo].[fooditems]
-    WHERE id = @FoodItemId;
-
-    -- Step 2: Check if there is enough quantity to fulfill the order
-    IF @CurrentQuantity IS NULL
-    BEGIN
-        RAISERROR ('Food item not found', 16, 1);
-        RETURN;
-    END
-
-    IF @CurrentQuantity < @Quantity
-    BEGIN
-        RAISERROR ('Insufficient quantity available', 16, 1);
-        RETURN;
-    END
-
-    -- Step 3: Update the fooditems table, reducing the quantity
-    UPDATE [dbo].[fooditems]
-    SET quantity = quantity - @Quantity
-    WHERE id = @FoodItemId;
-
-    -- Step 4: Insert a new record into the Orders table
-    INSERT INTO Orders (Username, Quantity, Restaurant_id, CreatedAt, FoodName)
-    VALUES (@Username, @Quantity, @RestaurantId, GETDATE(), @Food);
+        id,
+        food_name,
+        quantity,
+        expiration_date,
+        restaurant_id
+    FROM 
+        fooditems;
 END
+
+USE [DevTest]
+GO
+/****** Object:  StoredProcedure [dbo].[GetFoodItemsByRestaurant]    Script Date: 2024-10-31 5:14:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[GetFoodItemsByRestaurant]
+    @UserName NVARCHAR(100)
+AS
+BEGIN
+    -- Get the UserId (RestaurantId) from Users table
+    DECLARE @RestaurantId INT;
+    
+    SELECT @RestaurantId = UserId 
+    FROM Users 
+    WHERE UserName = @UserName;
+
+    -- If the restaurant doesn't exist, return an empty result set
+    IF @RestaurantId IS NULL
+    BEGIN
+        SELECT 'Restaurant not found' AS Message;
+        RETURN;
+    END
+
+    -- Retrieve food items associated with the restaurant's UserId
+    SELECT 
+        food_name, 
+        Quantity, 
+        expiration_date
+    FROM FoodItems
+    WHERE restaurant_id = @RestaurantId;
+END;
 
 
 USE [DevTest]
 GO
-/****** Object:  StoredProcedure [dbo].[GetOrdersByUsername]    Script Date: 2024-11-05 7:55:13 PM ******/
+/****** Object:  StoredProcedure [dbo].[InsertFoodItem]    Script Date: 2024-10-31 5:14:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[InsertFoodItem]
+    @FoodName NVARCHAR(100),
+    @Quantity INT,
+    @ExpiryDate DATE,
+    @Condition NVARCHAR(50),
+    @User NVARCHAR(100)  -- Accept the restaurant's username
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @RestaurantId INT;
+
+    -- Get the UserId (RestaurantId) from the Users table
+    SELECT @RestaurantId = UserId 
+    FROM Users 
+    WHERE UserName = @User;
+
+    -- Check if the restaurant exists
+    IF (@RestaurantId IS NULL)
+    BEGIN
+        SELECT 'Error: Restaurant not found' AS Result;
+        RETURN;
+    END
+
+    -- Insert the new food item along with the RestaurantId
+    INSERT INTO fooditems (food_name, Quantity, expiration_date, restaurant_id)
+    VALUES (@FoodName, @Quantity, @ExpiryDate, @RestaurantId);
+
+    -- Return a success message
+    SELECT 'Food item added successfully' AS Result;
+END
+
+USE [DevTest]
+GO
+/****** Object:  StoredProcedure [dbo].[GetFoodItemById]    Script Date: 2024-11-07 8:48:17 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[GetFoodItemById]
+    @FoodItemId INT
+AS
+BEGIN
+    SELECT food_name, Quantity, expiration_date
+    FROM fooditems
+    WHERE Id = @FoodItemId;
+END;
+
+USE [DevTest]
+GO
+/****** Object:  StoredProcedure [dbo].[GetOrdersByUsername]    Script Date: 2024-11-07 8:48:32 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -161,4 +220,3 @@ BEGIN
     ORDER BY 
         CreatedAt DESC;
 END
-
