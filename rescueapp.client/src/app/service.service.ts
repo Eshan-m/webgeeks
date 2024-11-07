@@ -37,6 +37,26 @@ export class ServiceService {
     return this.http.get(this.APIUrl + '/GetfooditemsRes/' + val);
   }
 
+
+  Orderfood(val: any, val2: any, val3: any) {
+    return this.http.get(this.APIUrl + '/Orderfood/' + val + '/' + val2 + '/' + val3);
+  }
+
+  Getfooditemsordered(val: any) {
+    return this.http.get(this.APIUrl + '/Getfooditemsordered/' + val);
+  }
+
+  Deletefooditem(val: any) {
+    return this.http.get(this.APIUrl + '/Deletefooditem/' + val);
+  }
+
+  updateFoodItem(id: number, foodItem: any): Observable<any> {
+    return this.http.put<any>(this.APIUrl +`/EditFoodItem/`+id, foodItem);
+  }
+
+  getFoodItemById(id: number) {
+    return this.http.get(this.APIUrl + '/GetFoodItemById/'+ id);
+
   //Order food
 
   Orderfood(val: any, val2: any, val3: any) {
@@ -45,6 +65,7 @@ export class ServiceService {
 
   Getfooditemsordered(val: any) {
     return this.http.get(this.APIUrl + '/Getfooditemsordered/' + val);
+
   }
 
  

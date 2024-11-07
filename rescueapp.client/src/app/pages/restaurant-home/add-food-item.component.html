@@ -1,17 +1,19 @@
 <div class="add-food-item">
-    <h1>Add New Food Item</h1>
-  
-    <form (submit)="onSubmit()">
-      <label for="name">Food Name</label>
-      <input id="name" [(ngModel)]="foodItem.name" name="name" required>
-  
-      <label for="quantity">Quantity</label>
-      <input id="quantity" type="number" [(ngModel)]="foodItem.quantity" name="quantity" required>
-  
-      <label for="expiry">Expiration Date</label>
-      <input id="expiry" type="date" [(ngModel)]="foodItem.expiry" name="expiry" required>
-  
-  
-      <button type="submit" (click)="addFoodItem()">Add Food Item</button>
-    </form>
-  </div>
+  <h1>Add New Food Item</h1>
+
+  <form (submit)="onSubmit()">
+    <label for="name">Food Name</label>
+    <input id="name" [(ngModel)]="foodItem.name" name="name" required />
+
+    <label for="quantity">Quantity</label>
+    <input id="quantity" type="number" [(ngModel)]="foodItem.quantity" name="quantity" required />
+
+    <label for="expiry">Expiration Date</label>
+    <input id="expiry" type="date" [(ngModel)]="foodItem.expiry" name="expiry" required />
+
+    <div class="button-group">
+      <button class="add-btn" type="submit" (click)="addFoodItem()">Add Food Item</button>
+      <button class="back-btn" routerLink="/restaurant-home">Back</button>
+    </div>
+  </form>
+</div>
