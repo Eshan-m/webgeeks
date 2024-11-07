@@ -8,29 +8,40 @@
   .actions {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 
-    button {
+    .add-food-btn {
       padding: 12px 20px;
       font-size: 16px;
       border-radius: 5px;
+      background-color: #5cb85c;
+      color: white;
       border: none;
       cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .add-food-btn {
-      background-color: #5cb85c; // Green for primary action
-      color: white;
+      transition: background-color 0.3s;
 
       &:hover {
-        background-color: #4cae4c; // Darker green on hover
+        background-color: #4cae4c;
       }
     }
 
-    input {
-      padding: 10px;
-      width: 200px;
+    input[type="text"] {
+      padding: 10px 15px;
+      font-size: 16px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      transition: border-color 0.3s;
+
+      &:focus {
+        border-color: #5cb85c;
+      }
+
+      &::placeholder {
+        color: #888;
+      }
     }
   }
 
@@ -67,22 +78,23 @@
         cursor: pointer;
         border-radius: 5px;
         text-align: center;
-      }
+        transition: background-color 0.3s;
 
-      .edit {
-        background-color: #0275d8; // Professional blue color
-      }
+        &.edit {
+          background-color: #0275d8;
 
-      .delete {
-        background-color: #d9534f; // Red color for delete
-      }
+          &:hover {
+            background-color: #025aa5;
+          }
+        }
 
-      .edit:hover {
-        background-color: #025aa5; // Darker blue on hover
-      }
+        &.delete {
+          background-color: #d9534f;
 
-      .delete:hover {
-        background-color: #c9302c; // Darker red on hover
+          &:hover {
+            background-color: #c9302c;
+          }
+        }
       }
     }
   }
