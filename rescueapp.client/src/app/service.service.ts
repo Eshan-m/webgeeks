@@ -2,64 +2,59 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class ServiceService {
 
-  // Base URL for API Services
-  private readonly baseUrl: string = "http://localhost:5279/api";
+  //Base Url for API Services
 
+  baseUrl: string = "http://localhost:5279";
+
+  readonly APIUrl = this.baseUrl + "/api";
   constructor(private http: HttpClient) { }
 
-  // User Registration
-  registerUser(user: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/insertuser`, user);
+  //User Registration
+  Insertuser(val: any) {
+    return this.http.post(this.APIUrl + '/insertuser', val);
   }
 
-  // User Login
-  loginUser(username: string, password: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/Getuser/${username}/${password}`);
+  //User Login
+  Getloggeduser(val: any, val2: any) {
+    return this.http.get(this.APIUrl + '/Getuser/' + val + '/' + val2);
   }
 
-  // Get All Food Items
-  getFoodItems(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/GetFoodItems`);
+  getFoodItems() {
+    return this.http.get(this.APIUrl + '/GetFoodItems');
   }
 
-  // Add a Food Item
-  addFoodItem(foodItem: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/addFoodItem`, foodItem);
+  addFoodItem(val: any) {
+    return this.http.post(this.APIUrl + '/addFoodItem', val);
   }
 
-  // Get Food Items by Restaurant Username
-  getFoodItemsByRestaurant(username: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/GetfooditemsRes/${username}`);
+  GetfooditemsRes(val: any) {
+    return this.http.get(this.APIUrl + '/GetfooditemsRes/' + val);
   }
 
-  // Order Food
-  orderFood(foodItemId: string, username: string, quantity: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/Orderfood/${foodItemId}/${username}/${quantity}`);
+  Orderfood(val: any, val2: any, val3: any) {
+    return this.http.get(this.APIUrl + '/Orderfood/' + val + '/' + val2 + '/' + val3);
   }
 
-  // Get Ordered Food Items by Username
-  getOrderedFoodItems(username: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/Getfooditemsordered/${username}`);
+  Getfooditemsordered(val: any) {
+    return this.http.get(this.APIUrl + '/Getfooditemsordered/' + val);
   }
 
-  // Delete a Food Item by ID
-  deleteFoodItem(foodItemId: number): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/Deletefooditem/${foodItemId}`);
+  Deletefooditem(val: any) {
+    return this.http.get(this.APIUrl + '/Deletefooditem/' + val);
   }
 
-  // Update a Food Item
-  updateFoodItem(foodItemId: number, foodItem: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/EditFoodItem/${foodItemId}`, foodItem);
+  updateFoodItem(id: number, foodItem: any): Observable<any> {
+    return this.http.put<any>(this.APIUrl +`/EditFoodItem/`+id, foodItem);
   }
 
-  // Get a Food Item by ID
-  getFoodItemById(foodItemId: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/GetFoodItemById/${foodItemId}`);
+  getFoodItemById(id: number) {
+    return this.http.get(this.APIUrl + '/GetFoodItemById/'+ id);
   }
 
 }
