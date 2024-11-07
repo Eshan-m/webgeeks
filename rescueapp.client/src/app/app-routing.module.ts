@@ -6,6 +6,7 @@ import { RestaurantHomeComponent } from './pages/restaurant-home/restaurant-home
 import { AddFoodItemComponent } from './pages/restaurant-home/add-food-item.component';
 import { EditFoodItemComponent } from './pages/restaurant-home/edit-food-item.component';
 import { HomeComponent } from './pages/home/home.component';
+import { FoodlistComponent } from './pages/foodlist/foodlist.component';
 
 const routes: Routes = [
   {
@@ -14,7 +15,10 @@ const routes: Routes = [
     children: [
       {
         path: '',
+
         redirectTo: 'home',
+
+
         pathMatch: 'full',
       },
       {
@@ -42,6 +46,10 @@ const routes: Routes = [
       {
         path: 'add-food-item',
         component: AddFoodItemComponent,
+      },
+      {
+        path: 'foodlist',
+        component: FoodlistComponent,
       },
       {
         path: 'edit-food-item/:name',
