@@ -24,4 +24,11 @@ namespace RescueApp.Server.Models
         public string user { get; set; }
     }
 
+    public class FoodItems
+    {
+        public string food_name { get; set; }
+        public int Quantity { get; set; }
+        public int id { get; set; }
+    }
+
 }
