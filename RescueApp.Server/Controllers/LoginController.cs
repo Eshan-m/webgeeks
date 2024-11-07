@@ -230,10 +230,38 @@ namespace RescueApp.Server.Controllers
             return Ok(foodItems);
         }
 
+        [HttpGet]
+        [Route("GetAdminStatistics")]
+        public ActionResult<Dictionary<string, object>> GetAdminStatistics()
+        {
+            string sqlDataSource = _configuration.GetConnectionString("DevConnection");
+            Dictionary<string, object> statistics = new Dictionary<string, object>();
 
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand("GetAdminStatistics", myCon))
+                {
+                    myCommand.CommandType = CommandType.StoredProcedure;
 
+                    using (SqlDataReader myReader = myCommand.ExecuteReader())
+                    {
+                        if (myReader.HasRows)
+                        {
+                            myReader.Read();
+                            statistics["TotalUsers"] = myReader["TotalUsers"];
+                            statistics["TotalRestaurants"] = myReader["TotalRestaurants"];
+                            statistics["TotalFoodItems"] = myReader["TotalFoodItems"];
+                            statistics["ExpiredItems"] = myReader["ExpiredItems"];
+                        }
+                    }
+                }
+            }
 
+            return Ok(statistics);
+        }
 
 
     }
+
 }
