@@ -37,6 +37,8 @@ export class ServiceService {
     return this.http.get(this.APIUrl + '/GetfooditemsRes/' + val);
   }
 
+  //Order food
+
   Orderfood(val: any, val2: any, val3: any) {
     return this.http.get(this.APIUrl + '/Orderfood/' + val + '/' + val2 + '/' + val3);
   }
@@ -45,4 +47,5 @@ export class ServiceService {
     return this.http.get(this.APIUrl + '/Getfooditemsordered/' + val);
   }
 
+ 
 }
