@@ -11,4 +11,10 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 GO
 
-
+CREATE TABLE Orders (
+    RecId INT PRIMARY KEY IDENTITY(1,1),
+    Username VARCHAR(50) NOT NULL,
+    Quantity VARCHAR(10),
+    Restaurant_id VARCHAR(255),
+    CreatedAt DATETIME DEFAULT GETDATE()
+);
