@@ -19,7 +19,7 @@ export class AppSideLoginComponent {
     this.service.Getloggeduser(this.Username, this.password).subscribe(response => {
 
       console.log(response); 
-
+      localStorage.setItem("Username", this.Username);
       const responseString = JSON.stringify(response);
       console.log('Response as string:', responseString);
 

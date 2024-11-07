@@ -1,0 +1,26 @@
+<div class="foodlist-container">
+  <h2>Ordered Food Items</h2>
+
+  <table *ngIf="foodItems.length" class="styled-table">
+    <thead>
+      <tr>
+        <th>Food Name</th>
+        <th>Quantity</th>
+        <th>Ordered Date</th>
+        <th>Ordered Time</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let food of foodItems">
+        <td>{{ food.FoodName }}</td>
+        <td>{{ food.Quantity }}</td>
+        <td>{{ food.CreatedAt | date:'yyyy-MM-dd' }}</td>  <!-- For Date -->
+        <td>{{ food.CreatedAt | date:'HH:mm:ss' }}</td>
+        <td>
+          <i class="fas fa-check-circle text-success"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
