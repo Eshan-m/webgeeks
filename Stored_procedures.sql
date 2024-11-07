@@ -176,5 +176,37 @@ BEGIN
     SELECT 'Food item added successfully' AS Result;
 END
 
+CREATE PROCEDURE [dbo].[GetAdminStatistics]
+AS
+BEGIN
+    SET NOCOUNT ON;
 
+    -- Total number of users
+    DECLARE @TotalUsers INT;
+    SELECT @TotalUsers = COUNT(*) FROM dbo.Users;
+
+    -- Total number of restaurants
+    DECLARE @TotalRestaurants INT;
+    SELECT @TotalRestaurants = COUNT(*) 
+    FROM dbo.Users
+    WHERE UserType = 'Restaurant';
+
+    -- Total number of food items
+    DECLARE @TotalFoodItems INT;
+    SELECT @TotalFoodItems = COUNT(*) FROM dbo.FoodItems;
+
+    -- Add any other statistics as needed
+    DECLARE @ExpiredItems INT;
+    SELECT @ExpiredItems = COUNT(*)
+    FROM dbo.FoodItems
+    WHERE expiration_date < GETDATE();
+
+    -- Return results
+    SELECT 
+        @TotalUsers AS TotalUsers,
+        @TotalRestaurants AS TotalRestaurants,
+        @TotalFoodItems AS TotalFoodItems,
+        @ExpiredItems AS ExpiredItems;
+END;
+GO
 
