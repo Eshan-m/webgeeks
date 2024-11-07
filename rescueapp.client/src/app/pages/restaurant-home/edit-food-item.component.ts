@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ServiceService } from './../../../app/service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-food-item',
@@ -7,21 +9,55 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./edit-food-item.component.scss']
 })
 export class EditFoodItemComponent implements OnInit {
-  foodItem = { name: '', quantity: 0, expiry: '', condition: '' };
-
-  constructor(private route: ActivatedRoute) {}
+  foodItems: any = [];
+  foodId: number=0;
+  constructor(private route: ActivatedRoute, private service: ServiceService) {}
 
   ngOnInit(): void {
-    // Fetch food item by ID (API call can be added here)
-    const foodName = this.route.snapshot.paramMap.get('name') || ''; // Provide a fallback empty string if null
-    console.log('Editing item:', foodName);
+    const id = this.route.snapshot.paramMap.get('name');
+    this.foodId = id ? +id : 0; // Convert `id` to a number
 
-    // Mock data for now
-    this.foodItem = { name: foodName, quantity: 10, expiry: '2024-10-20', condition: 'fresh' };
+    // Log or use the `foodId` as needed
+    console.log("Food ID:", this.foodId);
+
+    // Ensure foodId is not null before calling loadFoodItem
+    if (this.foodId) {
+      this.loadFoodItem(this.foodId);
+    }
+    
+  }
+
+  loadFoodItem(id: number): void {
+    this.service.getFoodItemById(id).subscribe(
+      (data: any) => {
+        // Handle the case where the response is an array
+        if (Array.isArray(data) && data.length > 0) {
+          this.foodItems = data[0]; // Use the first element if it's an array
+        } else {
+          this.foodItems = data; // Directly assign the response if it's a single object
+        }
+
+    
+
+        console.log(this.foodItems); // Debugging: log the data
+      },
+      (error) => {
+        console.error('Failed to load food item', error);
+      }
+    );
   }
 
   onSave() {
-    // Logic to save changes (API call can be added here)
-    console.log('Food item saved:', this.foodItem);
+    this.service.updateFoodItem(this.foodId, this.foodItems).subscribe(
+      response => {
+        console.log('Food item updated successfully', response);
+        // Redirect or show a success message
+        Swal.fire('Successful!', 'Food item updated successfully!', 'success');
+      },
+      error => {
+        console.error('Error updating food item', error);
+      }
+    );
   }
+
 }

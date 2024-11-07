@@ -28,14 +28,33 @@ export class ServiceService {
   getFoodItems() {
     return this.http.get(this.APIUrl + '/GetFoodItems');
   }
-  //Restuarant Functions (add, view)
+
   addFoodItem(val: any) {
     return this.http.post(this.APIUrl + '/addFoodItem', val);
   }
 
   GetfooditemsRes(val: any) {
-    return this.http.get(this.APIUrl + '/GetfooditemsRes/' + val);
-  }
+    return this.http.get(this.APIUrl + '/GetfooditemsRes/' + val);
+  }
 
+  Orderfood(val: any, val2: any, val3: any) {
+    return this.http.get(this.APIUrl + '/Orderfood/' + val + '/' + val2 + '/' + val3);
+  }
+
+  Getfooditemsordered(val: any) {
+    return this.http.get(this.APIUrl + '/Getfooditemsordered/' + val);
+  }
+
+  Deletefooditem(val: any) {
+    return this.http.get(this.APIUrl + '/Deletefooditem/' + val);
+  }
+
+  updateFoodItem(id: number, foodItem: any): Observable<any> {
+    return this.http.put<any>(this.APIUrl +`/EditFoodItem/`+id, foodItem);
+  }
+
+  getFoodItemById(id: number) {
+    return this.http.get(this.APIUrl + '/GetFoodItemById/'+ id);
+  }
 
 }
