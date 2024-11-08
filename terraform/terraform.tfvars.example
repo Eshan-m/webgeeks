@@ -1,7 +1,8 @@
 # terraform.tfvars.example
 
+subscription_id			=	"19628183-bbb1-4536-977f-e8f20d489a43"
 resource_group_name      = "food-rescue-app-rg"
-location                 = "East US"
+location                 = "centralus"
 app_service_plan_name    = "food-rescue-app-service-plan"
 frontend_app_service_name = "food-rescue-frontend"
 backend_app_service_name = "food-rescue-backend"
