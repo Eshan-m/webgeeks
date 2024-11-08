@@ -9,6 +9,65 @@
       <th>Phone</th>
       <th>Actions</th>
     </tr>
+    <div class="client-management">
+      <h2>Client Management</h2>
+
+      <!-- Search and Filters -->
+      <div class="actions">
+        <input type="text" placeholder="Search clients..." [(ngModel)]="searchQuery" (input)="applyFilters()" />
+        <select [(ngModel)]="selectedStatus" (change)="applyFilters()">
+          <option value="">All</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+
+      <!-- Displayed Columns Toggle -->
+      <div class="toggle-columns">
+        <label *ngFor="let column of ['name', 'email', 'status', 'actions']">
+          <input type="checkbox" [checked]="displayedColumns.includes(column)" (change)="toggleColumn(column)" />
+          {{ column | titlecase }}
+        </label>
+      </div>
+
+      <!-- Client Table -->
+      <table>
+        <tr>
+          <th *ngFor="let column of displayedColumns">{{ column | titlecase }}</th>
+        </tr>
+        <tr *ngFor="let client of filteredClients">
+          <td *ngIf="displayedColumns.includes('name')">{{ client.name }}</td>
+          <td *ngIf="displayedColumns.includes('email')">{{ client.email }}</td>
+          <td *ngIf="displayedColumns.includes('status')">
+            {{ client.status }}
+            <button *ngIf="client.status !== 'active'" (click)="changeStatus(client, 'active')">Activate</button>
+            <button *ngIf="client.status === 'active'" (click)="changeStatus(client, 'inactive')">Deactivate</button>
+          </td>
+          <td *ngIf="displayedColumns.includes('actions')">
+            <button (click)="viewAuditLogs(client.id)">View Logs</button>
+            <button (click)="deleteClient(client.id)">Delete</button>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Data Analytics -->
+      <div class="analytics">
+        <h3>Client Statistics</h3>
+        <p>Total Clients: {{ getClientStatistics().totalClients }}</p>
+        <p>Active Clients: {{ getClientStatistics().activeClients }}</p>
+        <p>Inactive Clients: {{ getClientStatistics().inactiveClients }}</p>
+      </div>
+
+      <!-- Audit Logs Modal -->
+      <div class="audit-log-modal" *ngIf="showAuditLog">
+        <h3>Audit Logs</h3>
+        <button (click)="showAuditLog = false">Close</button>
+        <ul>
+          <li *ngFor="let log of auditLogs">{{ log.timestamp }} - {{ log.action }}</li>
+        </ul>
+      </div>
+    </div>
+
     <tr *ngFor="let client of clients; let i = index">
       <td>{{ client.name }}</td>
       <td>{{ client.email }}</td>

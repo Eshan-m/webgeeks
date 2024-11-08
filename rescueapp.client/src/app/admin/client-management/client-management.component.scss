@@ -1,15 +1,6 @@
 .client-management {
-  h2 {
-    color: #333;
-  }
-
-  .add-client-btn {
-    background-color: #4caf50;
-    color: #fff;
-    padding: 8px 16px;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 10px;
+  .actions, .toggle-columns {
+    margin-bottom: 1rem;
   }
 
   table {
@@ -19,20 +10,29 @@
     th, td {
       border: 1px solid #ddd;
       padding: 8px;
-      text-align: left;
     }
+  }
 
-    th {
-      background-color: #f4f4f4;
-      font-weight: bold;
-    }
+  .analytics {
+    margin-top: 1rem;
+    background: #f4f4f4;
+    padding: 1rem;
+    border-radius: 5px;
+  }
 
-    .delete-btn {
-      background-color: #f44336;
-      color: #fff;
-      padding: 4px 8px;
-      border: none;
-      cursor: pointer;
+  .audit-log-modal {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    ul {
+      list-style: none;
+      padding: 0;
     }
   }
 }
