@@ -1,0 +1,21 @@
+<div class="client-management">
+  <h2>Client Management</h2>
+  <button class="add-client-btn">Add Client</button>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let client of clients; let i = index">
+      <td>{{ client.name }}</td>
+      <td>{{ client.email }}</td>
+      <td>{{ client.phone }}</td>
+      <td>
+        <button (click)="deleteClient(i)" class="delete-btn">Delete</button>
+      </td>
+    </tr>
+  </table>
+</div>
