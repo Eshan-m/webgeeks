@@ -6,6 +6,7 @@ import { EditFoodItemComponent } from './restaurant-home/edit-food-item.componen
 import { HomeComponent } from './home/home.component';
 import { FoodlistComponent } from './foodlist/foodlist.component';
 import { OrdersComponent } from './orders/orders.component';
+import { ViewordersComponent } from './vieworders/vieworders.component';
 
 export const PagesRoutes: Routes = [
   {
@@ -46,6 +47,13 @@ export const PagesRoutes: Routes = [
   {
     path: 'orders',
     component: OrdersComponent,
+    data: {
+      title: 'Orders',
+    },
+  },
+  {
+    path: 'orderlist',
+    component: ViewordersComponent,
     data: {
       title: 'Orders',
     },
