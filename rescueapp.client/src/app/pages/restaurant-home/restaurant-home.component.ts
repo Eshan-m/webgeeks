@@ -25,9 +25,16 @@ export class RestaurantHomeComponent implements OnInit {
   
   }
 
-  onDelete(item: { name: string; quantity: number; expiry: string; status: string }): void {
-    // Logic to delete item (API call can be added here)
-    console.log('Deleting item:', item);
+  onDelete(item: { name: string; quantity: number; expiry: string; status: string; id: number }): void {
+    console.log(item.id);
+    this.service.Deletefooditem(item.id).subscribe(
+      (items) => {
+        window.location.reload();
+      },
+      (error) => {
+        console.error('Error fetching food items', error);
+      }
+    );
   }
 
   loadFoodItems(): void {

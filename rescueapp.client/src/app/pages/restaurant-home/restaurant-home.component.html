@@ -15,7 +15,7 @@
           <p>Expiry: {{ item.expiration_date }}</p>
           <p>Status: Nearly Expiry</p>
         </div>
-        <button routerLink="/edit-food-item/{{item.name}}">Edit</button>
+        <button routerLink="/edit-food-item/{{item.id}}">Edit</button>
         <button (click)="onDelete(item)">Delete</button>
       </li>
     </ul>
