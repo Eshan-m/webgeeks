@@ -10,7 +10,7 @@ export class ServiceService {
 
   //Base Url for API Services
 
-  baseUrl: string = "http://localhost:5279";
+  baseUrl: string = "https://localhost:44363";
 
   readonly APIUrl = this.baseUrl + "/api";
   constructor(private http: HttpClient) { }
@@ -55,6 +55,9 @@ export class ServiceService {
 
   getFoodItemById(id: number) {
     return this.http.get(this.APIUrl + '/GetFoodItemById/'+ id);
+  }
+  Getresturantordered(val: any) {
+    return this.http.get(this.APIUrl + '/Getresturantordered/' + val);
   }
 
 }
