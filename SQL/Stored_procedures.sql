@@ -266,3 +266,13 @@ BEGIN
     ORDER BY 
         CreatedAt DESC;
 END
+
+CREATE PROCEDURE GetOrdersByRestaurantUsername
+    @RestaurantUsername NVARCHAR(50)
+AS
+BEGIN
+    SELECT o.RecId, o.Username, o.Quantity, o.Restaurant_id, o.CreatedAt, o.FoodName
+    FROM Orders o
+    INNER JOIN Users u ON o.Restaurant_id = u.UserId
+    WHERE u.UserName = @RestaurantUsername AND u.UserType = 'restaurant';
+END;
