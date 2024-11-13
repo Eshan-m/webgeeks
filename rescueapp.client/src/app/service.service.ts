@@ -35,7 +35,10 @@ export class ServiceService {
 
   GetfooditemsRes(val: any) {
     return this.http.get(this.APIUrl + '/GetfooditemsRes/' + val);
-  }
+  }
 
+  getAdminData() {
+    return this.http.get(this.APIUrl + '/GetAdminStatistics');
+  }
 
 }

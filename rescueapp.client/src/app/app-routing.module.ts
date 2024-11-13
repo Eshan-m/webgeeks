@@ -7,6 +7,8 @@ import { AddFoodItemComponent } from './pages/restaurant-home/add-food-item.comp
 import { EditFoodItemComponent } from './pages/restaurant-home/edit-food-item.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FoodlistComponent } from './pages/foodlist/foodlist.component';
+import { AdminComponent } from './pages/admin/admin.component';
+
 
 const routes: Routes = [
   {
@@ -54,6 +56,11 @@ const routes: Routes = [
       {
         path: 'edit-food-item/:name',
         component: EditFoodItemComponent,
+      },
+      // Route for AdminComponent here
+      {
+        path: 'admin',
+        component: AdminComponent,
       },
     ],
   },

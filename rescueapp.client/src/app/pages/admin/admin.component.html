@@ -1,0 +1,20 @@
+<style>
+  /* Dashboard container with padding to prevent overlap */
+  .dashboard-container {
+    padding: 20px;
+    position: relative;
+  }
+</style>
+
+
+
+<div class="dashboard-container">
+  <!-- Button in top-right corner -->
+    <mat-card class="impact-chart">
+      <mat-card-title>Environmental Impact</mat-card-title>
+      <apx-chart [series]="userChart.series"
+                 [chart]="userChart.chart"
+                 [labels]="userChart.labels">
+      </apx-chart>
+    </mat-card>
+</div>
