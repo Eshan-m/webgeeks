@@ -10,8 +10,8 @@ import Swal from 'sweetalert2';
 })
 export class EditFoodItemComponent implements OnInit {
   foodItems: any = [];
-  foodId: number=0;
-  constructor(private route: ActivatedRoute, private service: ServiceService) {}
+  foodId: number = 0;
+  constructor(private route: ActivatedRoute, private service: ServiceService) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('name');
@@ -24,7 +24,7 @@ export class EditFoodItemComponent implements OnInit {
     if (this.foodId) {
       this.loadFoodItem(this.foodId);
     }
-    
+
   }
 
   loadFoodItem(id: number): void {
@@ -37,7 +37,7 @@ export class EditFoodItemComponent implements OnInit {
           this.foodItems = data; // Directly assign the response if it's a single object
         }
 
-    
+
 
         console.log(this.foodItems); // Debugging: log the data
       },

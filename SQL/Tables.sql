@@ -18,4 +18,3 @@ CREATE TABLE Orders (
     Restaurant_id VARCHAR(255),
     CreatedAt DATETIME DEFAULT GETDATE()
 );
-

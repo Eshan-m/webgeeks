@@ -13,16 +13,16 @@ export class RestaurantHomeComponent implements OnInit {
   totalItems = 0; // Will display the total number of food items
 
 
-  restaurantUsername: string = 'exa'; 
+  restaurantUsername: string = 'exa';
 
   constructor(private router: Router, private service: ServiceService) { }
 
   ngOnInit(): void {
     // Fetch food items (API call can be added here)
-  
-      this.loadFoodItems();
-    
-  
+
+    this.loadFoodItems();
+
+
   }
 
   onDelete(item: { name: string; quantity: number; expiry: string; status: string; id: number }): void {
@@ -38,11 +38,11 @@ export class RestaurantHomeComponent implements OnInit {
   }
 
   loadFoodItems(): void {
-  
+
     this.service.GetfooditemsRes(localStorage.getItem("Username")?.toString()).subscribe(
       (items) => {
         this.foodItems = items;
-       
+
         // Update total items count
         console.log(this.totalItems = this.foodItems.length);
       },
