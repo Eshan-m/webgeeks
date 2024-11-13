@@ -2,9 +2,11 @@
   <h1>Welcome to Your Food Listings</h1>
 
   <div class="actions">
-    <button class="add-food-btn" routerLink="/add-food-item">+ Add New Food Item</button>
-    <input type="text" placeholder="Search Food Items">
+    <button class="add-food-btn" routerLink="/add-food-item">+ Add Food Item</button>
+    <button class="add-food-btn" style="margin-left:20px" routerLink="/orderlist">View Orders</button>
+ 
   </div>
+ 
 
   <ul>
     <li *ngFor="let item of foodItems">
