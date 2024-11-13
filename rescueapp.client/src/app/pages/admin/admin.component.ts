@@ -24,7 +24,7 @@ import {
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import { RouterModule } from '@angular/router';  // Import RouterModule
-
+import { ServiceService } from './../../../app/service.service';
 
 export interface userChart {
   series: ApexAxisChartSeries;
@@ -37,6 +37,12 @@ export interface userChart {
   responsive: ApexResponsive;
 }
 
+export interface AdminData {
+  TotalUsers: number;
+  TotalRestaurants: number;
+  TotalFoodItems: number;
+  ExpiredItems: number;
+}
 
 
 @Component({
@@ -60,13 +66,10 @@ export class AdminComponent {
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   public userChart!: Partial<userChart> | any;
 
-  constructor() {
-    // Food rescue chart
-
-    // Environmental impact chart
+  constructor(private service: ServiceService) {
     this.userChart = {
-      series: [350, 300, 450],
-      labels: ['CO2 Saved (kg)', 'Water Saved (liters)', 'Energy Saved (kWh)'],
+      series: [0, 0], // default values, will be updated once data is received
+      labels: ['Users', 'Restaurants'],
       chart: {
         type: 'donut',
         height: 160,
@@ -82,5 +85,40 @@ export class AdminComponent {
       },
       tooltip: { enabled: false },
     };
+
+    // Fetch the data and then update the chart
+    this.login();
   }
+
+  login() {
+    this.service.getAdminData().subscribe((resp) => {
+      const response = resp as AdminData;
+      console.log(response);
+      
+      const TotalUsers = response.TotalUsers || 0; // Adjust according to actual response structure
+      
+      const TotalRestaurants = response?.TotalRestaurants || 0; // Adjust according to actual response structure
+
+      // Update the chart data once response is available
+      this.userChart = {
+        series: [TotalUsers, TotalRestaurants],
+        labels: ['Users', 'Restaurants'],
+        chart: {
+          type: 'pie',
+          height: 160,
+          toolbar: { show: false },
+        },
+        colors: ['#8dc63f', '#009688', '#ff9800'],
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '75%',
+            },
+          },
+        },
+        tooltip: { enabled: false },
+      };
+    });
+  }
+
 }
