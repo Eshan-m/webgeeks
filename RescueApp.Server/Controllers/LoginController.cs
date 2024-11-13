@@ -471,5 +471,54 @@ namespace RescueApp.Server.Controllers
         }
 
 
+
+
+        [HttpGet]
+        [Route("Getresturantordered/{Username}")]
+        public ActionResult<IEnumerable<Dictionary<string, object>>> Getresturantordered(string Username)
+        {
+            string sqlDataSource = _configuration.GetConnectionString("DevConnection");
+
+            DataTable foodItemsTable = new DataTable();
+
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+
+                // Use the stored procedure to get food items by restaurant username
+                using (SqlCommand cmd = new SqlCommand("GetOrdersByRestaurantUsername", myCon))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Pass the restaurant's username as a parameter
+                    cmd.Parameters.AddWithValue("@RestaurantUsername", Username);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        foodItemsTable.Load(reader);
+                    }
+                }
+
+                myCon.Close();
+            }
+
+            // Convert DataTable to List of Dictionaries for JSON serialization
+            var foodItems = new List<Dictionary<string, object>>();
+            foreach (DataRow row in foodItemsTable.Rows)
+            {
+                var item = new Dictionary<string, object>();
+                foreach (DataColumn column in foodItemsTable.Columns)
+                {
+                    item[column.ColumnName] = row[column];
+                }
+                foodItems.Add(item);
+            }
+
+            return Ok(foodItems);
+        }
+
+
+
+
     }
 }
