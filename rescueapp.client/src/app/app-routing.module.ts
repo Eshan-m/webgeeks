@@ -8,6 +8,7 @@ import { EditFoodItemComponent } from './pages/restaurant-home/edit-food-item.co
 import { HomeComponent } from './pages/home/home.component';
 import { FoodlistComponent } from './pages/foodlist/foodlist.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { ViewordersComponent } from './pages/vieworders/vieworders.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,10 @@ const routes: Routes = [
       {
         path: 'orders',
         component: OrdersComponent,
+      },
+      {
+        path: 'orderlist',
+        component: ViewordersComponent,
       },
       {
         path: 'edit-food-item/:name',
