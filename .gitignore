@@ -9,6 +9,8 @@
 .terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.backup
+terraform/*.tfstate
+
 
 
 # User-specific files
