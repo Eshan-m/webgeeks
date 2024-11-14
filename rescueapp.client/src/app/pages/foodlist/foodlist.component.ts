@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Modal } from 'bootstrap';
 import { FormsModule } from '@angular/forms';
-
+import Swal from 'sweetalert2';
 export interface FoodItem {
   id: number;
   food_name: string;
@@ -45,6 +45,23 @@ export class FoodlistComponent implements OnInit {
   confirmPickup() {
     console.log('Record ID:', this.selectedFoodId);
     console.log('Pickup Quantity:', this.pickupQuantity);
+    localStorage.getItem("Username");
+
+
+
+    this.service.Orderfood(this.selectedFoodId, localStorage.getItem("Username"), this.pickupQuantity).subscribe((res) => {
+      console.log(res);
+      Swal.fire('Successful!', 'Food item added successfully!', 'success');
+      window.location.reload(); // Redirect to food list page
+    },
+      (error) => {
+        Swal.fire('Error Occurred', 'Failed to add food item', 'error');
+        console.error('Error:', error);
+      }
+    );
+
+
+
     // Perform actions like sending the data to the backend or updating state
     this.closeModal();  // Close the modal after confirming
   }

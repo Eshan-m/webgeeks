@@ -58,7 +58,7 @@ BEGIN
         -- Insert the user data into the Users table
         INSERT INTO Users (UserName, Password, Email, UserType)
         VALUES (@UserName, @Password, @Email, @UserType);
-        
+
         -- Commit the transaction
         COMMIT TRANSACTION;
     END TRY
@@ -70,7 +70,7 @@ BEGIN
         DECLARE @ErrorSeverity INT;
         DECLARE @ErrorState INT;
 
-        SELECT 
+        SELECT
             @ErrorMessage = ERROR_MESSAGE(),
             @ErrorSeverity = ERROR_SEVERITY(),
             @ErrorState = ERROR_STATE();
@@ -80,71 +80,15 @@ BEGIN
 END;
 GO
 
-
-
+--INSERT FOOD Procedure
 USE [DevTest]
 GO
-/****** Object:  StoredProcedure [dbo].[GetFoodItems]    Script Date: 2024-10-31 5:14:22 PM ******/
+/****** Object:  StoredProcedure [dbo].[InsertFoodItem]   ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[GetFoodItems]
-AS
-BEGIN
-    SELECT 
-        id,
-        food_name,
-        quantity,
-        expiration_date,
-        restaurant_id
-    FROM 
-        fooditems;
-END
-
-USE [DevTest]
-GO
-/****** Object:  StoredProcedure [dbo].[GetFoodItemsByRestaurant]    Script Date: 2024-10-31 5:14:39 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-ALTER PROCEDURE [dbo].[GetFoodItemsByRestaurant]
-    @UserName NVARCHAR(100)
-AS
-BEGIN
-    -- Get the UserId (RestaurantId) from Users table
-    DECLARE @RestaurantId INT;
-    
-    SELECT @RestaurantId = UserId 
-    FROM Users 
-    WHERE UserName = @UserName;
-
-    -- If the restaurant doesn't exist, return an empty result set
-    IF @RestaurantId IS NULL
-    BEGIN
-        SELECT 'Restaurant not found' AS Message;
-        RETURN;
-    END
-
-    -- Retrieve food items associated with the restaurant's UserId
-    SELECT 
-        food_name, 
-        Quantity, 
-        expiration_date
-    FROM FoodItems
-    WHERE restaurant_id = @RestaurantId;
-END;
-
-
-USE [DevTest]
-GO
-/****** Object:  StoredProcedure [dbo].[InsertFoodItem]    Script Date: 2024-10-31 5:14:57 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-ALTER PROCEDURE [dbo].[InsertFoodItem]
+CREATE PROCEDURE [dbo].[InsertFoodItem]
     @FoodName NVARCHAR(100),
     @Quantity INT,
     @ExpiryDate DATE,
@@ -157,8 +101,8 @@ BEGIN
     DECLARE @RestaurantId INT;
 
     -- Get the UserId (RestaurantId) from the Users table
-    SELECT @RestaurantId = UserId 
-    FROM Users 
+    SELECT @RestaurantId = UserId
+    FROM Users
     WHERE UserName = @User;
 
     -- Check if the restaurant exists
@@ -176,6 +120,163 @@ BEGIN
     SELECT 'Food item added successfully' AS Result;
 END
 
+--GET FOOD ITEMS Procedure
+USE [DevTest]
+GO
+/****** Object:  StoredProcedure [dbo].[GetFoodItemsByRestaurant]    ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetFoodItemsByRestaurant]
+    @UserName NVARCHAR(100)
+AS
+BEGIN
+    -- Get the UserId (RestaurantId) from Users table
+    DECLARE @RestaurantId INT;
+
+    SELECT @RestaurantId = UserId
+    FROM Users
+    WHERE UserName = @UserName;
+
+    -- If the restaurant doesn't exist, return an empty result set
+    IF @RestaurantId IS NULL
+    BEGIN
+        SELECT 'Restaurant not found' AS Message;
+        RETURN;
+    END
+
+    -- Retrieve food items associated with the restaurant's UserId
+    SELECT
+	    id,
+        food_name,
+        Quantity,
+        expiration_date
+    FROM FoodItems
+    WHERE restaurant_id = @RestaurantId;
+END;
+
+--GET FOOD Procedure
+USE [DevTest]
+GO
+/****** Object:  StoredProcedure [dbo].[GetFoodItemById] ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetFoodItemById]
+    @FoodItemId INT
+AS
+BEGIN
+    SELECT food_name, Quantity, expiration_date
+    FROM fooditems
+    WHERE Id = @FoodItemId;
+END;
+GO
+
+--GET FOOD ITEMS  Procedure
+USE [DevTest]
+GO
+/****** Object:  StoredProcedure [dbo].[GetFoodItems]    ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetFoodItems]
+AS
+BEGIN
+    SELECT
+        id,
+        food_name,
+        quantity,
+        expiration_date,
+        restaurant_id
+    FROM
+        fooditems;
+END
+
+--DELETE FOOD Procedure
+USE [DevTest]
+GO
+/****** Object:  StoredProcedure [dbo].[DeleteFoodItemById] ******/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[DeleteFoodItemById]
+    @foodItemId INT
+AS
+BEGIN
+    DELETE FROM fooditems
+    WHERE id = @foodItemId;
+END;
+GO
+
+--UPDATE FOOD Procedure
+USE [DevTest]
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateFoodItemById] ******/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[UpdateFoodItemById]
+    @FoodItemId INT,
+    @FoodName NVARCHAR(100),
+    @Quantity INT
+AS
+BEGIN
+    UPDATE fooditems
+    SET
+        food_name = @FoodName,
+        quantity = @Quantity
+    WHERE
+        id = @FoodItemId;
+END;
+GO
+
+--Get Orders By resturant
+USE [DevTest]
+GO
+/****** Object:  StoredProcedure [dbo].[GetOrdersByUsername]    ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[GetOrdersByUsername]
+    @Username NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        RecId,
+        Username,
+        Quantity,
+        Restaurant_id,
+        CreatedAt,
+		FoodName
+    FROM
+        [dbo].[Orders]
+    WHERE
+        Username = @Username
+    ORDER BY
+        CreatedAt DESC;
+END
+
+CREATE PROCEDURE GetOrdersByRestaurantUsername
+    @RestaurantUsername NVARCHAR(50)
+AS
+BEGIN
+    SELECT o.RecId, o.Username, o.Quantity, o.Restaurant_id, o.CreatedAt, o.FoodName
+    FROM Orders o
+    INNER JOIN Users u ON o.Restaurant_id = u.UserId
+    WHERE u.UserName = @RestaurantUsername AND u.UserType = 'restaurant';
+END;
+
 CREATE PROCEDURE [dbo].[GetAdminStatistics]
 AS
 BEGIN
@@ -187,7 +288,7 @@ BEGIN
 
     -- Total number of restaurants
     DECLARE @TotalRestaurants INT;
-    SELECT @TotalRestaurants = COUNT(*) 
+    SELECT @TotalRestaurants = COUNT(*)
     FROM dbo.Users
     WHERE UserType = 'Restaurant';
 
@@ -202,11 +303,10 @@ BEGIN
     WHERE expiration_date < GETDATE();
 
     -- Return results
-    SELECT 
+    SELECT
         @TotalUsers AS TotalUsers,
         @TotalRestaurants AS TotalRestaurants,
         @TotalFoodItems AS TotalFoodItems,
         @ExpiredItems AS ExpiredItems;
 END;
 GO
-

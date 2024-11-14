@@ -7,8 +7,9 @@ import { AddFoodItemComponent } from './pages/restaurant-home/add-food-item.comp
 import { EditFoodItemComponent } from './pages/restaurant-home/edit-food-item.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FoodlistComponent } from './pages/foodlist/foodlist.component';
+import { OrdersComponent } from './pages/orders/orders.component';
+import { ViewordersComponent } from './pages/vieworders/vieworders.component';
 import { AdminComponent } from './pages/admin/admin.component';
-
 
 const routes: Routes = [
   {
@@ -52,6 +53,14 @@ const routes: Routes = [
       {
         path: 'foodlist',
         component: FoodlistComponent,
+      },
+      {
+        path: 'orders',
+        component: OrdersComponent,
+      },
+      {
+        path: 'orderlist',
+        component: ViewordersComponent,
       },
       {
         path: 'edit-food-item/:name',
