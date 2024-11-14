@@ -62,5 +62,8 @@ export class ServiceService {
   getAdminData() {
     return this.http.get(this.APIUrl + '/GetAdminStatistics');
   }
+  getUsers() {
+    return this.http.get(this.APIUrl + '/GetUsers');
+  }
 
 }
