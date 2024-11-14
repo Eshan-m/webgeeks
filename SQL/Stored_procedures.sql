@@ -237,7 +237,7 @@ BEGIN
 END;
 GO
 
---Get Orders By Username
+--Get Orders By resturant
 USE [DevTest]
 GO
 /****** Object:  StoredProcedure [dbo].[GetOrdersByUsername]    ******/
