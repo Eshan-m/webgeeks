@@ -310,3 +310,20 @@ BEGIN
         @ExpiredItems AS ExpiredItems;
 END;
 GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetUsers]
+AS
+BEGIN
+    SELECT 
+        UserId,
+        UserName,
+        Email,
+        UserType
+    FROM 
+        Users;
+END
+GO
