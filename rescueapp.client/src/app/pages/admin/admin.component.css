@@ -1,0 +1,30 @@
+
+.main-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.impact-chart {
+  padding: 40px 20px;
+}
+.apexcharts-legend{
+    margin-right:200px;
+}
+.apexcharts-legend-text {
+  font-size: 17px !important;
+  font-weight: 600 !important;
+}
+
+#chart {
+  margin-top: 100px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  padding: 40px 10px;
+  background: white;
+}
+
+.second-chart-header {
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 40px;
+}

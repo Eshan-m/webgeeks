@@ -68,6 +68,7 @@ export type ChartOptions = {
 @Component({
   selector: 'admin-dashboard',
   templateUrl: './admin.component.html',
+  styleUrls: ["./admin.component.css"],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
@@ -93,14 +94,14 @@ export class AdminComponent {
       labels: ['Users', 'Restaurants'],
       chart: {
         type: 'donut',
-        height: 160,
+        height: 260,
         toolbar: { show: false },
       },
       colors: ['#F5921B', '#009688'],
       plotOptions: {
         pie: {
           donut: {
-            size: '75%',
+            size: '85%',
           },
         },
       },
@@ -196,7 +197,7 @@ export class AdminComponent {
         }
       },
       title: {
-        text: "Food items expiring in next 10 days",
+        text: "number of Food items",
         floating: false,
         offsetY: 320,
         align: "center",

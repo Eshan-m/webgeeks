@@ -10,6 +10,7 @@
 
 <div class="dashboard-container">
   <!-- Button in top-right corner -->
+  <h1 class="main-header">Admin Statistics</h1>
   <mat-card class="impact-chart">
     <mat-card-title>Types of accounts</mat-card-title>
     <apx-chart [series]="userChart.series"
@@ -19,6 +20,7 @@
   </mat-card>
 
   <div id="chart">
+    <h1 class="second-chart-header">Food Items expiring in next 10 days</h1>
     <apx-chart [series]="chartOptions.series ?? []"
                [chart]="chartOptions.chart  ?? {
         type: 'donut',
