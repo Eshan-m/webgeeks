@@ -52,6 +52,13 @@ export interface AdminData {
   ExpiredItems: number;
 }
 
+export interface User {
+  UserId: number;
+  UserName: string;
+  Email: string;
+  UserType: string;
+}
+
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -88,6 +95,7 @@ export class AdminComponent {
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   public userChart!: Partial<userChart> | any;
   public chartOptions: Partial<ChartOptions>;
+  users: User[] = [];
   constructor(private service: ServiceService) {
     this.userChart = {
       series: [0, 0], // default values, will be updated once data is received
@@ -209,7 +217,8 @@ export class AdminComponent {
 
     // Fetch the data and then update the chart
     this.getadmin();
-    this.getFooditems()
+    this.getFooditems();
+    this.getUsers();
   }
 
   getadmin() {
@@ -316,5 +325,17 @@ export class AdminComponent {
     return result;
   }
 
+  getUsers(): void {
+    this.service.getUsers().subscribe(
+      (resp) => {
+        let response = resp as User[];
+        console.log(response); // Log the response to the console
+        this.users = response; // Store the user list in the component's property
+      },
+      (error) => {
+        console.error('Error fetching users:', error); // Log errors if any
+      }
+    );
+  }
 
 }
