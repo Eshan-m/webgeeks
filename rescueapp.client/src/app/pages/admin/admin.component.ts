@@ -331,7 +331,7 @@ export class AdminComponent {
       (resp) => {
         let response = resp as User[];
         console.log(response); // Log the response to the console
-        this.users = response.filter(user => user.UserType === 'user'); // Store the user list in the component's property
+        this.users = response.filter(user => user.UserType === 'customer'); // Store the user list in the component's property
         this.restaurants = response.filter(user => user.UserType === 'restaurant');
       },
       (error) => {

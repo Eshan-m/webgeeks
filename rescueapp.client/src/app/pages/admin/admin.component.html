@@ -34,4 +34,22 @@
                [fill]="chartOptions.fill ?? {}"
                [title]="chartOptions.title ?? {}"></apx-chart>
   </div>
+  <div class="user-div">
+    <div class="user-list rest-list">
+    <ul>
+      <li *ngFor="let user of restaurants">
+        {{ user.UserName }} - {{ user.Email }}
+      </li>
+    </ul>
+
+    </div>
+    <div class="user-list cust-list">
+    <ul>
+      <li *ngFor="let user of users">
+        {{ user.UserName }} - {{ user.Email }}
+      </li>
+    </ul>
+
+    </div>
+  </div>
 </div>
