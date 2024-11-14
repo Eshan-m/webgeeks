@@ -10,11 +10,26 @@
 
 <div class="dashboard-container">
   <!-- Button in top-right corner -->
-    <mat-card class="impact-chart">
-      <mat-card-title>Types of accounts</mat-card-title>
-      <apx-chart [series]="userChart.series"
-                 [chart]="userChart.chart"
-                 [labels]="userChart.labels">
-      </apx-chart>
-    </mat-card>
+  <mat-card class="impact-chart">
+    <mat-card-title>Types of accounts</mat-card-title>
+    <apx-chart [series]="userChart.series"
+               [chart]="userChart.chart"
+               [labels]="userChart.labels">
+    </apx-chart>
+  </mat-card>
+
+  <div id="chart">
+    <apx-chart [series]="chartOptions.series ?? []"
+               [chart]="chartOptions.chart  ?? {
+        type: 'donut',
+        height: 160,
+        toolbar: { show: false },
+      }"
+               [dataLabels]="chartOptions.dataLabels  ?? {}"
+               [plotOptions]="chartOptions.plotOptions ?? {}"
+               [yaxis]="chartOptions.yaxis  ?? []"
+               [xaxis]="chartOptions.xaxis ?? {}"
+               [fill]="chartOptions.fill ?? {}"
+               [title]="chartOptions.title ?? {}"></apx-chart>
+  </div>
 </div>

@@ -10,7 +10,7 @@ export class ServiceService {
 
   //Base Url for API Services
 
-  baseUrl: string = "https://localhost:44363";
+  baseUrl: string = "http://localhost:5279";
 
   readonly APIUrl = this.baseUrl + "/api";
   constructor(private http: HttpClient) { }
