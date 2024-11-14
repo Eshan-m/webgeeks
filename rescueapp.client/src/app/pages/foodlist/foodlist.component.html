@@ -18,7 +18,7 @@
         <td>{{ food.quantity }}</td>
         <td>{{ food.expiration_date }}</td>
         <td>
-          <button class="pickup-btn btn" (click)="openPickupModal(food.id)">Pick Up</button>
+          <button class="pickup-btn" (click)="openPickupModal(food.id)">Pick Up</button>
         </td>
       </tr>
     </tbody>
@@ -35,7 +35,6 @@
     <div class="modal-body">
       <form>
         <div class="form-group">
-          
           <input type="number" id="pickupQuantity" [(ngModel)]="pickupQuantity" name="pickupQuantity" required>
         </div>
       </form>

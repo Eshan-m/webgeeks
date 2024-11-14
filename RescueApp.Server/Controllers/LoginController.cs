@@ -232,6 +232,291 @@ namespace RescueApp.Server.Controllers
 
 
 
+        [HttpGet, ActionName("Orderfood")]
+        [Route("Orderfood/{RecId}/{User}/{Qty}")]
+        public JsonResult Orderfood(string RecId, string User, int Qty)
+        {
+            string storedProcName = "InsertOrderAndUpdateFoodItem"; // Name of the stored procedure
+            int role = -1; // Default value if no role is found
+            string sqlDataSource = _configuration.GetConnectionString("DevConnection");
+
+            // Check if the connection string is null or empty
+            if (string.IsNullOrEmpty(sqlDataSource))
+            {
+                return new JsonResult(new { success = false, message = "Database connection string is not configured." });
+            }
+
+            try
+            {
+                using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+                {
+                    myCon.Open();
+                    using (SqlCommand myCommand = new SqlCommand(storedProcName, myCon))
+                    {
+                        myCommand.CommandType = CommandType.StoredProcedure; // Specify that we are using a stored procedure
+
+                        // Add parameters to prevent SQL injection
+                        myCommand.Parameters.AddWithValue("@Username", User);
+                        myCommand.Parameters.AddWithValue("@FoodItemId", RecId);
+                        myCommand.Parameters.AddWithValue("@Quantity", Qty);
+
+                        // Execute the command and retrieve the return value
+                        object result = myCommand.ExecuteScalar();
+
+                        // Check if result is not null before casting
+                        if (result != null)
+                        {
+                            role = (int)result; // Cast to int if not null
+                        }
+                        else
+                        {
+
+
+                            // Handle case where no role is returned
+                            Console.WriteLine("No role returned from stored procedure.");
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Handle SQL exceptions
+                Console.WriteLine($"SQL Exception: {ex.Message}");
+                return new JsonResult(new { success = false, message = "Database error occurred." });
+            }
+            catch (Exception ex)
+            {
+                // Handle general exceptions
+                Console.WriteLine($"Exception: {ex.Message}");
+                return new JsonResult(new { success = false, message = "An error occurred." });
+            }
+
+            // Return the result as a JSON response
+            return new JsonResult(new { success = true, role });
+        }
+
+
+
+
+        [HttpGet]
+        [Route("Getfooditemsordered/{Username}")]
+        public ActionResult<IEnumerable<Dictionary<string, object>>> Getfooditemsordered(string Username)
+        {
+            string sqlDataSource = _configuration.GetConnectionString("DevConnection");
+
+            DataTable foodItemsTable = new DataTable();
+
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+
+                // Use the stored procedure to get food items by restaurant username
+                using (SqlCommand cmd = new SqlCommand("GetOrdersByUsername", myCon))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Pass the restaurant's username as a parameter
+                    cmd.Parameters.AddWithValue("@UserName", Username);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        foodItemsTable.Load(reader);
+                    }
+                }
+
+                myCon.Close();
+            }
+
+            // Convert DataTable to List of Dictionaries for JSON serialization
+            var foodItems = new List<Dictionary<string, object>>();
+            foreach (DataRow row in foodItemsTable.Rows)
+            {
+                var item = new Dictionary<string, object>();
+                foreach (DataColumn column in foodItemsTable.Columns)
+                {
+                    item[column.ColumnName] = row[column];
+                }
+                foodItems.Add(item);
+            }
+
+            return Ok(foodItems);
+        }
+
+
+
+        [HttpGet]
+        [Route("Deletefooditem/{id}")]
+        public ActionResult<IEnumerable<Dictionary<string, object>>> Deletefooditem(int id)
+        {
+            string sqlDataSource = _configuration.GetConnectionString("DevConnection");
+
+            DataTable foodItemsTable = new DataTable();
+
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+
+                // Use the stored procedure to get food items by restaurant username
+                using (SqlCommand cmd = new SqlCommand("DeleteFoodItemById", myCon))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Pass the restaurant's username as a parameter
+                    cmd.Parameters.AddWithValue("@foodItemId", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        foodItemsTable.Load(reader);
+                    }
+                }
+
+                myCon.Close();
+            }
+
+            // Convert DataTable to List of Dictionaries for JSON serialization
+            var foodItems = new List<Dictionary<string, object>>();
+            foreach (DataRow row in foodItemsTable.Rows)
+            {
+                var item = new Dictionary<string, object>();
+                foreach (DataColumn column in foodItemsTable.Columns)
+                {
+                    item[column.ColumnName] = row[column];
+                }
+                foodItems.Add(item);
+            }
+
+            return Ok(foodItems);
+        }
+
+
+
+        [HttpPut]
+        [Route("EditFoodItem/{id}")]
+        public IActionResult EditFoodItem(int id, [FromBody] FoodItems food)
+        {
+            string sqlDataSource = _configuration.GetConnectionString("DevConnection");
+
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand cmd = new SqlCommand("UpdateFoodItemById", myCon))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Add parameters
+                    cmd.Parameters.AddWithValue("@FoodItemId", id);
+                    cmd.Parameters.AddWithValue("@FoodName", food.food_name);
+                    cmd.Parameters.AddWithValue("@Quantity", food.Quantity);
+
+
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine($"SQL Exception: {ex.Message}");
+                        return BadRequest(new { success = false, message = "Database error occurred." });
+                    }
+                }
+                myCon.Close();
+            }
+
+            return Ok(new { success = true, message = "Food item updated successfully." });
+        }
+
+        [HttpGet]
+        [Route("GetFoodItemById/{id}")]
+        public ActionResult<Dictionary<string, object>> GetFoodItem(int id)
+        {
+            string sqlDataSource = _configuration.GetConnectionString("DevConnection");
+
+            DataTable foodItemsTable = new DataTable();
+
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+
+                // Use the stored procedure to get food items by restaurant username
+                using (SqlCommand cmd = new SqlCommand("GetFoodItemById", myCon))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Pass the restaurant's username as a parameter
+                    cmd.Parameters.AddWithValue("@FoodItemId", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        foodItemsTable.Load(reader);
+                    }
+                }
+
+                myCon.Close();
+            }
+
+            // Convert DataTable to List of Dictionaries for JSON serialization
+            var foodItems = new List<Dictionary<string, object>>();
+            foreach (DataRow row in foodItemsTable.Rows)
+            {
+                var item = new Dictionary<string, object>();
+                foreach (DataColumn column in foodItemsTable.Columns)
+                {
+                    item[column.ColumnName] = row[column];
+                }
+                foodItems.Add(item);
+            }
+
+            return Ok(foodItems);
+        }
+
+
+
+
+        [HttpGet]
+        [Route("Getresturantordered/{Username}")]
+        public ActionResult<IEnumerable<Dictionary<string, object>>> Getresturantordered(string Username)
+        {
+            string sqlDataSource = _configuration.GetConnectionString("DevConnection");
+
+            DataTable foodItemsTable = new DataTable();
+
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+
+                // Use the stored procedure to get food items by restaurant username
+                using (SqlCommand cmd = new SqlCommand("GetOrdersByRestaurantUsername", myCon))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Pass the restaurant's username as a parameter
+                    cmd.Parameters.AddWithValue("@RestaurantUsername", Username);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        foodItemsTable.Load(reader);
+                    }
+                }
+
+                myCon.Close();
+            }
+
+            // Convert DataTable to List of Dictionaries for JSON serialization
+            var foodItems = new List<Dictionary<string, object>>();
+            foreach (DataRow row in foodItemsTable.Rows)
+            {
+                var item = new Dictionary<string, object>();
+                foreach (DataColumn column in foodItemsTable.Columns)
+                {
+                    item[column.ColumnName] = row[column];
+                }
+                foodItems.Add(item);
+            }
+
+            return Ok(foodItems);
+        }
+
 
 
 

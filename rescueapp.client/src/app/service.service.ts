@@ -10,7 +10,7 @@ export class ServiceService {
 
   //Base Url for API Services
 
-  baseUrl: string = "http://localhost:5279";
+  baseUrl: string = "https://localhost:44363";
 
   readonly APIUrl = this.baseUrl + "/api";
   constructor(private http: HttpClient) { }
@@ -34,8 +34,30 @@ export class ServiceService {
   }
 
   GetfooditemsRes(val: any) {
-    return this.http.get(this.APIUrl + '/GetfooditemsRes/' + val);
-  }
+    return this.http.get(this.APIUrl + '/GetfooditemsRes/' + val);
+  }
 
+  Orderfood(val: any, val2: any, val3: any) {
+    return this.http.get(this.APIUrl + '/Orderfood/' + val + '/' + val2 + '/' + val3);
+  }
+
+  Getfooditemsordered(val: any) {
+    return this.http.get(this.APIUrl + '/Getfooditemsordered/' + val);
+  }
+
+  Deletefooditem(val: any) {
+    return this.http.get(this.APIUrl + '/Deletefooditem/' + val);
+  }
+
+  updateFoodItem(id: number, foodItem: any): Observable<any> {
+    return this.http.put<any>(this.APIUrl +`/EditFoodItem/`+id, foodItem);
+  }
+
+  getFoodItemById(id: number) {
+    return this.http.get(this.APIUrl + '/GetFoodItemById/'+ id);
+  }
+  Getresturantordered(val: any) {
+    return this.http.get(this.APIUrl + '/Getresturantordered/' + val);
+  }
 
 }
