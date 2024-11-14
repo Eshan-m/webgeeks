@@ -39,7 +39,7 @@ export class AppSideRegisterComponent {
       this.service.Insertuser(val).subscribe(res => {
         console.log(res);
         Swal.fire('Successfull !', '', 'success');
-        this.router.navigate(['/login']);
+        window.location.reload();
        
       }, (error => { Swal.fire('Error Occurred', '', 'error'); }));
     }
