@@ -96,6 +96,7 @@ export class AdminComponent {
   public userChart!: Partial<userChart> | any;
   public chartOptions: Partial<ChartOptions>;
   users: User[] = [];
+  restaurants: User[] = [];
   constructor(private service: ServiceService) {
     this.userChart = {
       series: [0, 0], // default values, will be updated once data is received
@@ -330,7 +331,8 @@ export class AdminComponent {
       (resp) => {
         let response = resp as User[];
         console.log(response); // Log the response to the console
-        this.users = response; // Store the user list in the component's property
+        this.users = response.filter(user => user.UserType === 'user'); // Store the user list in the component's property
+        this.restaurants = response.filter(user => user.UserType === 'restaurant');
       },
       (error) => {
         console.error('Error fetching users:', error); // Log errors if any
