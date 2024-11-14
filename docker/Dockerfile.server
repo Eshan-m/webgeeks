@@ -1,0 +1,19 @@
+# Use a .NET SDK image for building
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /app
+
+# Copy and restore dependencies
+COPY ../RescueApp.Server/*.csproj ./
+RUN dotnet restore
+
+# Copy the remaining files and build the project
+COPY ../RescueApp.Server .
+RUN dotnet publish -c Release -o /out
+
+# Use a smaller runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
+WORKDIR /app
+COPY --from=build /out .
+
+EXPOSE 80
+CMD ["dotnet", "RescueApp.Server.dll"]

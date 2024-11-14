@@ -1,0 +1,19 @@
+# Use Node.js image if it's a Node-based frontend
+FROM node:14
+
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY ../rescueapp.client/package*.json ./
+RUN npm install
+
+# Copy all other files and build the application
+COPY ../rescueapp.client .
+RUN npm run build
+
+# Use a web server like nginx to serve the build files
+FROM nginx:alpine
+COPY --from=0 /app/build /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

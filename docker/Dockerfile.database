@@ -1,0 +1,11 @@
+# Use the official SQL Server image
+FROM mcr.microsoft.com/mssql/server:2019-latest
+
+# Set environment variables required by SQL Server
+ENV ACCEPT_EULA=Y
+ENV SA_PASSWORD=Your_password123
+
+# Copy the SQL scripts to initialize the database
+COPY ../sql /docker-entrypoint-initdb.d
+
+EXPOSE 1433
