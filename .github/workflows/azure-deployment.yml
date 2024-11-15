@@ -1,0 +1,60 @@
+name: Azure Infrastructure and App Deployment
+
+on:
+  push:
+    branches:
+      - dev-clouddeployment  # Trigger on pushes to this branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the code
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      # Step 2: Login to Azure using CLI
+      - name: Log in to Azure
+        run: |
+          echo "${{ secrets.AZURE_CLI_TOKEN }}" > azure_token.json
+          az login --service-principal --username "$(jq -r '.clientId' azure_token.json)" \
+                   --password "$(jq -r '.clientSecret' azure_token.json)" \
+                   --tenant "$(jq -r '.tenantId' azure_token.json)"
+
+      # Step 3: Set up Terraform
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.9
+
+      # Step 4: Initialize Terraform
+      - name: Terraform Init
+        run: terraform init
+
+      # Step 5: Plan Terraform Infrastructure
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan \
+               -var "azure_subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" \
+               -var "sql_admin_username=${{ secrets.SQL_ADMIN_USERNAME }}" \
+               -var "sql_admin_password=${{ secrets.SQL_ADMIN_PASSWORD }}"
+
+      # Step 6: Apply Terraform Infrastructure
+      - name: Terraform Apply
+        run: terraform apply -input=false tfplan
+
+      # Step 7: Deploy API App
+      - name: Deploy API to Azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "FoodRescueApp-API"
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_API }}
+          package: ./api_publish
+
+      # Step 8: Deploy Client App
+      - name: Deploy Client to Azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "FoodRescueApp-Client"
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_CLIENT }}
+          package: ./rescueapp.client/dist
