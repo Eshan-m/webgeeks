@@ -1,21 +1,23 @@
-<div class="restaurant-management">
-  <h2>Restaurant Management</h2>
-  <button class="add-restaurant-btn">Add Restaurant</button>
+<div class="container">
+  <!-- Sidebar Navigation -->
+  <div class="sidebar">
+    <h3 class="sidebar-title">Admin Panel</h3>
+    <hr />
+    <ul class="nav-list">
+      <li><a href="/admin" class="nav-item">Dashboard</a></li>
+      <li><a href="/admin/food-items" class="nav-item">Manage Food Items</a></li>
+      <!-- Add more navigation items as needed -->
+    </ul>
+  </div>
 
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Location</th>
-      <th>Owner</th>
-      <th>Actions</th>
-    </tr>
-    <tr *ngFor="let restaurant of restaurants; let i = index">
-      <td>{{ restaurant.name }}</td>
-      <td>{{ restaurant.location }}</td>
-      <td>{{ restaurant.owner }}</td>
-      <td>
-        <button (click)="deleteRestaurant(i)" class="delete-btn">Delete</button>
-      </td>
-    </tr>
-  </table>
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <header class="header">
+      <h2>Admin Dashboard</h2>
+    </header>
+    <main class="content">
+      <p>Welcome to the admin panel. Here you can manage your items and view dashboard data.</p>
+      <!-- Placeholder for dynamic content -->
+    </main>
+  </div>
 </div>

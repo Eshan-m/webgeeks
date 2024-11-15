@@ -1,38 +1,50 @@
-.restaurant-management {
-  h2 {
-    color: #333;
-  }
+/* General Layout */
+.container {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
 
-  .add-restaurant-btn {
-    background-color: #4caf50;
-    color: #fff;
-    padding: 8px 16px;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
+.sidebar {
+  width: 200px;
+  background-color: #2e3b4e;
+  color: #ffffff;
+  padding: 1rem;
+}
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
+.sidebar-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
 
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
+.nav-list {
+  list-style-type: none;
+  padding: 0;
+}
 
-    th {
-      background-color: #f4f4f4;
-      font-weight: bold;
-    }
+.nav-item {
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 0;
+}
 
-    .delete-btn {
-      background-color: #f44336;
-      color: #fff;
-      padding: 4px 8px;
-      border: none;
-      cursor: pointer;
-    }
-  }
+.nav-item:hover {
+  background-color: #444b5f;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 1rem;
+  background-color: #f4f5f7;
+}
+
+.header {
+  background-color: #f1f1f1;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.content {
+  padding: 1rem;
 }
