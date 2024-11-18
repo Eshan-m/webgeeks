@@ -44,6 +44,11 @@ export class AppSideLoginComponent {
         localStorage.setItem('LoggedUserType', "2");
         this.router.navigate(['/restaurant-home']);
       } else {
+         if (this.role == 2) {
+        localStorage.setItem('LoggedUserName', this.Username);
+        localStorage.setItem('LoggedUserType', "2");
+        this.router.navigate(['/restaurant-home']);
+      } else
         Swal.fire('', 'Login Failed!', 'error');
       }
     });
