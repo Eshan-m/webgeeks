@@ -25,6 +25,11 @@ BEGIN
             SET @result = 2;  -- User is a restaurant owner
             SELECT @result;
         END
+        ELSE IF @UserType = 'admin'
+        BEGIN
+            SET @result = 3;  -- User is a admin
+            SELECT @result;
+        END
     END
     ELSE
     BEGIN
