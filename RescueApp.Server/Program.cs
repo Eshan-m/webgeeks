@@ -8,12 +8,11 @@ builder.Services.AddControllers();
 // Add CORS services
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin", builder =>
+    options.AddPolicy("AllowAnyOrigin", policy =>
     {
-        builder.WithOrigins("http://localhost:4200") // Allow your Angular app's URL
-               .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials();
+        policy.AllowAnyOrigin()  // Allow any origin
+              .AllowAnyMethod()  // Allow any HTTP method (GET, POST, etc.)
+              .AllowAnyHeader(); // Allow any header
     });
 });
 
@@ -25,6 +24,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseCors("AllowAnyOrigin");
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
@@ -39,7 +40,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Use CORS policy
-app.UseCors("AllowSpecificOrigin");
+
 
 app.UseAuthorization();
 

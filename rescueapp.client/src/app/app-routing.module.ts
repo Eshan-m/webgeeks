@@ -9,6 +9,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { FoodlistComponent } from './pages/foodlist/foodlist.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { ViewordersComponent } from './pages/vieworders/vieworders.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 const routes: Routes = [
   {
@@ -64,6 +65,11 @@ const routes: Routes = [
       {
         path: 'edit-food-item/:name',
         component: EditFoodItemComponent,
+      },
+      // Route for AdminComponent here
+      {
+        path: 'admin',
+        component: AdminComponent,
       },
     ],
   },

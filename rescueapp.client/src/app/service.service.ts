@@ -10,7 +10,7 @@ export class ServiceService {
 
   //Base Url for API Services
 
-  baseUrl: string = "https://localhost:44363";
+  baseUrl: string = "http://localhost:5279";
 
   readonly APIUrl = this.baseUrl + "/api";
   constructor(private http: HttpClient) { }
@@ -58,6 +58,12 @@ export class ServiceService {
   }
   Getresturantordered(val: any) {
     return this.http.get(this.APIUrl + '/Getresturantordered/' + val);
+  }
+  getAdminData() {
+    return this.http.get(this.APIUrl + '/GetAdminStatistics');
+  }
+  getUsers() {
+    return this.http.get(this.APIUrl + '/GetUsers');
   }
 
 }

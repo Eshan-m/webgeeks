@@ -90,7 +90,7 @@ namespace RescueApp.Server.Controllers
                         else
                         {
 
-                         
+
                             // Handle case where no role is returned
                             Console.WriteLine("No role returned from stored procedure.");
                         }
@@ -518,7 +518,77 @@ namespace RescueApp.Server.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetAdminStatistics")]
+        public ActionResult<Dictionary<string, object>> GetAdminStatistics()
+        {
+            string sqlDataSource = _configuration.GetConnectionString("DevConnection");
+            Dictionary<string, object> statistics = new Dictionary<string, object>();
+
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand("GetAdminStatistics", myCon))
+                {
+                    myCommand.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader myReader = myCommand.ExecuteReader())
+                    {
+                        if (myReader.HasRows)
+                        {
+                            myReader.Read();
+                            statistics["TotalUsers"] = myReader["TotalUsers"];
+                            statistics["TotalRestaurants"] = myReader["TotalRestaurants"];
+                            statistics["TotalFoodItems"] = myReader["TotalFoodItems"];
+                            statistics["ExpiredItems"] = myReader["ExpiredItems"];
+                        }
+                    }
+                }
+            }
+
+            return Ok(statistics);
+        }
+
+
+        [HttpGet]
+        [Route("GetUsers")]
+        public ActionResult<IEnumerable<Dictionary<string, object>>> GetUsers()
+        {
+            string query = "EXEC GetUsers"; // Your stored procedure name for Users
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("DevConnection");
+
+            // Open SQL connection and execute the stored procedure
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    using (SqlDataReader myReader = myCommand.ExecuteReader())
+                    {
+                        table.Load(myReader);
+                    }
+                }
+            }
+
+            // Convert DataTable to List of Dictionaries
+            var users = new List<Dictionary<string, object>>();
+            foreach (DataRow row in table.Rows)
+            {
+                var user = new Dictionary<string, object>();
+                foreach (DataColumn column in table.Columns)
+                {
+                    user[column.ColumnName] = row[column];
+                }
+                users.Add(user);
+            }
+
+            return Ok(users);
+        }
+
 
 
     }
+
 }

@@ -25,6 +25,11 @@ BEGIN
             SET @result = 2;  -- User is a restaurant owner
             SELECT @result;
         END
+        ELSE IF @UserType = 'admin'
+        BEGIN
+            SET @result = 3;  -- User is a admin
+            SELECT @result;
+        END
     END
     ELSE
     BEGIN
@@ -58,7 +63,7 @@ BEGIN
         -- Insert the user data into the Users table
         INSERT INTO Users (UserName, Password, Email, UserType)
         VALUES (@UserName, @Password, @Email, @UserType);
-        
+
         -- Commit the transaction
         COMMIT TRANSACTION;
     END TRY
@@ -70,7 +75,7 @@ BEGIN
         DECLARE @ErrorSeverity INT;
         DECLARE @ErrorState INT;
 
-        SELECT 
+        SELECT
             @ErrorMessage = ERROR_MESSAGE(),
             @ErrorSeverity = ERROR_SEVERITY(),
             @ErrorState = ERROR_STATE();
@@ -101,8 +106,8 @@ BEGIN
     DECLARE @RestaurantId INT;
 
     -- Get the UserId (RestaurantId) from the Users table
-    SELECT @RestaurantId = UserId 
-    FROM Users 
+    SELECT @RestaurantId = UserId
+    FROM Users
     WHERE UserName = @User;
 
     -- Check if the restaurant exists
@@ -134,9 +139,9 @@ AS
 BEGIN
     -- Get the UserId (RestaurantId) from Users table
     DECLARE @RestaurantId INT;
-    
-    SELECT @RestaurantId = UserId 
-    FROM Users 
+
+    SELECT @RestaurantId = UserId
+    FROM Users
     WHERE UserName = @UserName;
 
     -- If the restaurant doesn't exist, return an empty result set
@@ -147,10 +152,10 @@ BEGIN
     END
 
     -- Retrieve food items associated with the restaurant's UserId
-    SELECT 
+    SELECT
 	    id,
-        food_name, 
-        Quantity, 
+        food_name,
+        Quantity,
         expiration_date
     FROM FoodItems
     WHERE restaurant_id = @RestaurantId;
@@ -185,13 +190,13 @@ GO
 CREATE PROCEDURE [dbo].[GetFoodItems]
 AS
 BEGIN
-    SELECT 
+    SELECT
         id,
         food_name,
         quantity,
         expiration_date,
         restaurant_id
-    FROM 
+    FROM
         fooditems;
 END
 
@@ -205,7 +210,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[DeleteFoodItemById]
-    @foodItemId INT  
+    @foodItemId INT
 AS
 BEGIN
     DELETE FROM fooditems
@@ -229,10 +234,10 @@ CREATE PROCEDURE [dbo].[UpdateFoodItemById]
 AS
 BEGIN
     UPDATE fooditems
-    SET 
+    SET
         food_name = @FoodName,
         quantity = @Quantity
-    WHERE 
+    WHERE
         id = @FoodItemId;
 END;
 GO
@@ -252,18 +257,18 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    SELECT 
+    SELECT
         RecId,
         Username,
         Quantity,
         Restaurant_id,
         CreatedAt,
 		FoodName
-    FROM 
+    FROM
         [dbo].[Orders]
-    WHERE 
+    WHERE
         Username = @Username
-    ORDER BY 
+    ORDER BY
         CreatedAt DESC;
 END
 
@@ -276,3 +281,54 @@ BEGIN
     INNER JOIN Users u ON o.Restaurant_id = u.UserId
     WHERE u.UserName = @RestaurantUsername AND u.UserType = 'restaurant';
 END;
+
+CREATE PROCEDURE [dbo].[GetAdminStatistics]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Total number of users
+    DECLARE @TotalUsers INT;
+    SELECT @TotalUsers = COUNT(*) FROM dbo.Users;
+
+    -- Total number of restaurants
+    DECLARE @TotalRestaurants INT;
+    SELECT @TotalRestaurants = COUNT(*)
+    FROM dbo.Users
+    WHERE UserType = 'Restaurant';
+
+    -- Total number of food items
+    DECLARE @TotalFoodItems INT;
+    SELECT @TotalFoodItems = COUNT(*) FROM dbo.FoodItems;
+
+    -- Add any other statistics as needed
+    DECLARE @ExpiredItems INT;
+    SELECT @ExpiredItems = COUNT(*)
+    FROM dbo.FoodItems
+    WHERE expiration_date < GETDATE();
+
+    -- Return results
+    SELECT
+        @TotalUsers AS TotalUsers,
+        @TotalRestaurants AS TotalRestaurants,
+        @TotalFoodItems AS TotalFoodItems,
+        @ExpiredItems AS ExpiredItems;
+END;
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetUsers]
+AS
+BEGIN
+    SELECT 
+        UserId,
+        UserName,
+        Email,
+        UserType
+    FROM 
+        Users;
+END
+GO

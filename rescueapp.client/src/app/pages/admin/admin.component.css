@@ -1,0 +1,97 @@
+
+.main-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+  .main-header > svg {
+    height: 30px;
+    width: 30px;
+    margin-bottom: 5px;
+  }
+
+.impact-chart {
+  padding: 40px 20px;
+}
+.apexcharts-legend{
+    margin-right:200px;
+}
+.apexcharts-legend-text {
+  font-size: 17px !important;
+  font-weight: 600 !important;
+}
+
+#chart {
+  margin-top: 100px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  padding: 40px 10px;
+  background: white;
+}
+
+.second-chart-header {
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.user-div {
+  margin-top: 100px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  padding: 40px 10px;
+  background: white;
+}
+
+.user-list {
+  margin: 40px 30px;
+  padding: 20px 40px;
+  background: #f6f6f6;
+  border-radius: 10px;
+}
+
+.user-list-header > svg {
+  height: 30px;
+  width: 25px;
+  margin-right: 5px;
+  margin-bottom: 6px;
+  margin-left: 6px;
+}
+
+  .user-list > ul {
+    list-style: none;
+    height: 325px;
+    background: white;
+    padding: 0;
+    border-radius: 10px;
+    margin-top: 20px;
+    border: 1px solid rgb(180, 178, 178);
+    overflow-y: auto;
+  }
+
+    .user-list > ul > li {
+      padding: 10px 30px;
+      border: 1px solid rgb(224, 224, 224);
+      display: flex;
+      flex-flow: row;
+      justify-content: space-between;
+      color: #444;
+    }
+
+      .user-list > ul > li:hover {
+        color: black;
+        scale: 1.01;
+        background: #fdc1b6;
+        cursor: pointer;
+      }
+
+.list-email {
+  font-size: 0.9rem;
+  color: #838383;
+}
+
+  .list-email > svg {
+    height: 15px;
+    margin-right: 5px;
+    margin-bottom: 1px;
+  }
