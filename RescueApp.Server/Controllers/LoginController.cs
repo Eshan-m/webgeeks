@@ -589,6 +589,48 @@ namespace RescueApp.Server.Controllers
 
 
 
+        [HttpGet]
+        [Route("Getresturants")]
+        public ActionResult<IEnumerable<Dictionary<string, object>>> Getresturants()
+        {
+            string query = "EXEC Getresturants"; // Your stored procedure name
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("DevConnection");
+
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    using (SqlDataReader myReader = myCommand.ExecuteReader())
+                    {
+                        table.Load(myReader);
+                    }
+                }
+            }
+
+            // Convert DataTable to List of Dictionaries
+            var foodItems = new List<Dictionary<string, object>>();
+            foreach (DataRow row in table.Rows)
+            {
+                var item = new Dictionary<string, object>();
+                foreach (DataColumn column in table.Columns)
+                {
+                    item[column.ColumnName] = row[column];
+                }
+                foodItems.Add(item);
+            }
+
+            return Ok(foodItems);
+        }
+
+
+
+
+
+
+
     }
 
 }
