@@ -66,4 +66,8 @@ export class ServiceService {
     return this.http.get(this.APIUrl + '/GetUsers');
   }
 
+  Getresturants() {
+    return this.http.get(this.APIUrl + '/Getresturants/');
+  }
+
 }
