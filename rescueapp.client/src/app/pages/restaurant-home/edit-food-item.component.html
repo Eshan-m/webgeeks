@@ -1,5 +1,6 @@
 <div class="edit-food-item">
   <h1>Edit Food Item: {{ foodItems?.name }}</h1>
+  <button class="home-btn" [routerLink]="['/restaurant-home']">🏠 Home</button>
 
   <form (ngSubmit)="onSave()">
     <label for="name">Food Name</label>
