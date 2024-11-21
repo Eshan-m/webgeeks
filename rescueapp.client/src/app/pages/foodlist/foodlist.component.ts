@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Modal } from 'bootstrap';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { RouterModule } from '@angular/router';
 export interface FoodItem {
   id: number;
   food_name: string;
@@ -16,9 +17,10 @@ export interface FoodItem {
 @Component({
   selector: 'app-foodlist',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './foodlist.component.html',
-  styleUrls: ['./foodlist.component.scss']  // Corrected "styleUrls" with an 's'
+  styleUrls: ['./foodlist.component.scss'],
+
 })
 export class FoodlistComponent implements OnInit {
 
