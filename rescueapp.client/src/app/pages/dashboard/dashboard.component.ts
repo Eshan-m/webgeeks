@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { TablerIconsModule } from 'angular-tabler-icons';
+import { ServiceService } from './../../../app/service.service';
 import {
   ApexChart,
   ChartComponent,
@@ -135,7 +136,7 @@ const ELEMENT_DATA: mealsData[] = [
 })
 export class AppDashboardComponent {
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
-
+  foodItems: any = [];
   public foodRescueChart!: Partial<foodRescueChart> | any;
   public impactChart!: Partial<impactChart> | any;
 
@@ -206,8 +207,12 @@ export class AppDashboardComponent {
     },
   ];
 
-  constructor() {
+  constructor(private service: ServiceService) {
     // Food rescue chart
+
+   
+
+
     this.foodRescueChart = {
       series: [
         {
@@ -254,4 +259,14 @@ export class AppDashboardComponent {
       tooltip: { enabled: false },
     };
   }
+
+
+  ngOnInit(): void {
+    this.service.Getresturants().subscribe(data => {
+      this.foodItems = data;
+      console.log(this.foodItems);
+    });
+  }
+
+
 }
