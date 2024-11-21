@@ -342,12 +342,12 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-Create PROCEDURE [dbo].[Getresturants]
+Alter PROCEDURE [dbo].[Getresturants]
 AS
 BEGIN
     SELECT 
         USERNAME, UserType, USERID
     FROM 
-        Users;
+        Users where UserType='restaurant';
 END
 
