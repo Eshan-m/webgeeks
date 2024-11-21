@@ -1,6 +1,7 @@
 <div class="foodlist-container">
   <h2>Ordered Food Items</h2>
-
+  <!-- Home Button -->
+  <button class="home-btn" [routerLink]="['/restaurant-home']">🏠 Home</button>
   <table *ngIf="foodItems.length" class="styled-table">
     <thead>
       <tr>

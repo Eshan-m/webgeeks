@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Modal } from 'bootstrap';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-
+import { RouterModule } from '@angular/router';
 
 export interface FoodItem {
   id: number;
@@ -17,7 +17,7 @@ export interface FoodItem {
 @Component({
   selector: 'app-vieworders',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './vieworders.component.html',
   styleUrl: './vieworders.component.scss'
 })
