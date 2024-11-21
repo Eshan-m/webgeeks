@@ -332,3 +332,22 @@ BEGIN
         Users;
 END
 GO
+
+
+
+USE [DevTest]
+GO
+/****** Object:  StoredProcedure [dbo].[GetFoodItems]    Script Date: 2024-11-20 10:47:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+Create PROCEDURE [dbo].[Getresturants]
+AS
+BEGIN
+    SELECT 
+        USERNAME, UserType, USERID
+    FROM 
+        Users;
+END
+
