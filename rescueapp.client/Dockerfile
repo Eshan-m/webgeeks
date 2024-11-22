@@ -22,6 +22,9 @@ FROM nginx:alpine
 # Copy the built files from the build stage
 COPY --from=build /app/dist/Spike /usr/share/nginx/html
 
+# Copy the custom nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+
 # Expose port 80 for Nginx
 EXPOSE 80
 
