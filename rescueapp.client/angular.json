@@ -7,8 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss",
-          "node_modules/bootstrap/dist/css/bootstrap.min.css"
+          "style": "scss"
         }
       },
       "root": "",
@@ -26,36 +25,37 @@
             "outputPath": "dist/Spike",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": [ "zone.js" ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": [ "src/styles.scss", "src/assets/scss/style.scss", "node_modules/bootstrap/dist/css/bootstrap.min.css"],
+            "styles": [
+              "src/styles.scss",
+              "src/assets/scss/style.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ],
             "scripts": [
               "node_modules/@popperjs/core/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "node_modules/@popperjs/core/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-
             ]
-
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500mb",
-                  "maximumError": "500mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "6mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "5kb",
+                  "maximumError": "10kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": true,
+              "sourceMap": false
             },
             "development": {
               "buildOptimizer": false,
@@ -89,18 +89,18 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [ "zone.js", "zone.js/testing" ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ],
             "scripts": [
               "node_modules/@popperjs/core/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-
             ]
-
           }
         }
       }
@@ -108,11 +108,5 @@
   },
   "cli": {
     "analytics": false
-  },
-  "styles": [
-    "src/styles.scss",
-    "node_modules/bootstrap/dist/css/bootstrap.min.css",
-    "src/styles.css"
-  ]
-
+  }
 }
