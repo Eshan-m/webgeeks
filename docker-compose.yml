@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # SQL Server Container
+  sqlserver:
+    image: gagan00/mssql-custom:2022-latest
+    container_name: sqlserver-custom
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Admin@12345
+    ports:
+      - "1433:1433"
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # .NET Backend Container
+  backend:
+    build:
+      context: ./RescueApp.Server
+      dockerfile: Dockerfile
+    container_name: backend
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - "8080:8080"
+    depends_on:
+      - sqlserver
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # Angular Frontend Container
+  frontend:
+    build:
+      context: ./rescueapp.client
+      dockerfile: Dockerfile
+    container_name: frontend
+    environment:
+      - api_url=${API_URL}
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
