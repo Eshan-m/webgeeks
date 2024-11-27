@@ -22,7 +22,7 @@
         <td>{{ food.quantity }}</td>
         <td>{{ food.expiration_date }}</td>
         <td>
-          <button class="pickup-btn" (click)="openPickupModal(food.id)">Pick Up</button>
+          <button class="pickup-btn" (click)="openPickupModal(food.id,food.quantity)">Pick Up</button>
         </td>
       </tr>
     </tbody>

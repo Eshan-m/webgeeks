@@ -26,7 +26,8 @@ export class FoodlistComponent implements OnInit {
 
   foodItems: any = [];
   selectedFoodId: number | null = null;
-  pickupQuantity: number | null = null;
+  qty: number = 0;
+  pickupQuantity: number = 0;
   private modalInstance: Modal | null = null; // Define a property for the modal instance
   isModalOpen: boolean = false;  
 
@@ -39,8 +40,9 @@ export class FoodlistComponent implements OnInit {
     });
   }
 
-  openPickupModal(id: number) {
+  openPickupModal(id: number,qty: number) {
     this.selectedFoodId = id;
+    this.qty = qty;
     this.isModalOpen = true;  // Open the modal
   }
 
@@ -49,19 +51,21 @@ export class FoodlistComponent implements OnInit {
     console.log('Pickup Quantity:', this.pickupQuantity);
     localStorage.getItem("Username");
 
+    if (this.qty > this.pickupQuantity) {
 
-
-    this.service.Orderfood(this.selectedFoodId, localStorage.getItem("Username"), this.pickupQuantity).subscribe((res) => {
-      console.log(res);
-      Swal.fire('Successful!', 'Food item added successfully!', 'success');
-      window.location.reload(); // Redirect to food list page
-    },
-      (error) => {
-        Swal.fire('Error Occurred', 'Failed to add food item', 'error');
-        console.error('Error:', error);
-      }
-    );
-
+      this.service.Orderfood(this.selectedFoodId, localStorage.getItem("Username"), this.pickupQuantity).subscribe((res) => {
+        console.log(res);
+        Swal.fire('Successful!', 'Food item added successfully!', 'success');
+        window.location.reload(); // Redirect to food list page
+      },
+        (error) => {
+          Swal.fire('Error Occurred', 'Failed to add food item', 'error');
+          console.error('Error:', error);
+        }
+      );
+    } else {
+      Swal.fire('Quantity Exceeded', 'Quantity Exceeded', 'error');
+    }
 
 
     // Perform actions like sending the data to the backend or updating state
