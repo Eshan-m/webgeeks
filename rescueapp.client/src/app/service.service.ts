@@ -10,7 +10,7 @@ export class ServiceService {
 
   //Base Url for API Services
 
-  baseUrl: string = "http://4.206.3.0:8080";
+  baseUrl: string = "http://4.204.56.41:8080";
 
   readonly APIUrl = this.baseUrl + "/api";
   constructor(private http: HttpClient) { }
