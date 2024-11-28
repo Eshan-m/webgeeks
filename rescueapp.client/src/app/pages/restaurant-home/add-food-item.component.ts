@@ -28,32 +28,39 @@ export class AddFoodItemComponent {
 
   addFoodItem() {
     // Validate mandatory fields
-    if (
-      !this.foodItem.name ||
-      this.foodItem.quantity <= 0 ||
-      !this.foodItem.expiry 
-    ) {
-      Swal.fire('', 'Please fill all mandatory fields!', 'warning');
-    } else {
-      // Prepare data and send to API
-      const val = {
-        name: this.foodItem.name,
-        quantity: this.foodItem.quantity,
-        expiry: this.foodItem.expiry,
-        condition: this.foodItem.condition,
-        user: localStorage.getItem("Username")
-      };
 
-      this.service.addFoodItem(val).subscribe((res) => {
+    if (this.foodItem.quantity == 0) {
+      Swal.fire('Enter a valid Quantity', 'Quantity Exceeded', 'error');
+    } else {
+
+
+      if (
+        !this.foodItem.name ||
+        this.foodItem.quantity <= 0 ||
+        !this.foodItem.expiry
+      ) {
+        Swal.fire('', 'Please fill all mandatory fields!', 'warning');
+      } else {
+        // Prepare data and send to API
+        const val = {
+          name: this.foodItem.name,
+          quantity: this.foodItem.quantity,
+          expiry: this.foodItem.expiry,
+          condition: this.foodItem.condition,
+          user: localStorage.getItem("Username")
+        };
+
+        this.service.addFoodItem(val).subscribe((res) => {
           console.log(res);
           Swal.fire('Successful!', 'Food item added successfully!', 'success');
           this.router.navigate(['/resturant-home']); // Redirect to food list page
         },
-        (error) => {
-          Swal.fire('Error Occurred', 'Failed to add food item', 'error');
-          console.error('Error:', error);
-        }
-      );
+          (error) => {
+            Swal.fire('Error Occurred', 'Failed to add food item', 'error');
+            console.error('Error:', error);
+          }
+        );
+      }
     }
   }
 
