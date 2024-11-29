@@ -3,6 +3,7 @@ provider "azurerm" {
   subscription_id = "f5dac2a4-4260-4510-8cd5-55145975adfb"
 }
 
+
 # Variables
 variable "admin_username" {
   description = "Admin username for the VM"
