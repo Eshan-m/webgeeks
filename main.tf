@@ -3,14 +3,6 @@ provider "azurerm" {
   subscription_id = "f5dac2a4-4260-4510-8cd5-55145975adfb"
 }
 
-terraform {
-  backend "azurerm" {
-    storage_account_name = "capstoness"
-    container_name       = "terraform-state"
-    key                  = "terraform.tfstate"  # This is the file where state will be saved
-  }
-}
-
 # Variables
 variable "admin_username" {
   description = "Admin username for the VM"
