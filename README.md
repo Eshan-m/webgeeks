@@ -68,7 +68,7 @@ Ensure the correct connection string is configured for the production database.
 Expose the API on a secure HTTPS endpoint.
 
 ### Deploy the Database
-
+  
 Deploy the SQL Server database to a cloud-hosted SQL Server instance (e.g., Azure SQL Database) or an on-premise server.
 Update the schema and data using migration scripts or tools like SQL Server Management Studio (SSMS).
 Ensure proper access control and security configurations are in place.
