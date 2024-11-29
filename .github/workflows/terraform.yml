@@ -2,11 +2,9 @@ name: Terraform Deploy to Azure
 
 on:
   push:
-    branches:
-      - QA # Adjust branch name if needed
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - QA # Optional, for PRs
+    branches: [ "main" ]
 
 jobs:
   terraform:
