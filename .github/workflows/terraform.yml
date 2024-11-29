@@ -2,33 +2,26 @@ name: Terraform Deploy to Azure
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   terraform:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the code
+    # Step 1: Checkout the repository
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Set up Terraform
+    # Step 2: Set up Terraform CLI
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v2
       with:
-        terraform_version: 1.5.0 # Adjust based on your Terraform version
+        terraform_version: 1.5.0
 
-    # Authenticate with Azure
-    # - name: Azure Login
-    #   uses: azure/login@v1
-    #   with:
-    #     creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    # Initialize Terraform
-    - name: Set Environment Variables for Azure Authentication
+    # Step 3: Set Environment Variables for Azure Authentication
+    - name: Export Service Principal Credentials
       env:
         AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -44,18 +37,10 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
-    
-    # - name: Terraform Init
-    #   run: terraform init
-
-    - name: Terraform Destroy
-      run: terraform destroy -auto-approve
-
-    # Plan Terraform changes
+    # Step 5: Terraform Plan
     - name: Terraform Plan
-      run: terraform plan -out=tfplan
+      run: terraform plan
 
-    # Apply Terraform changes
+    # Step 6: Terraform Apply
     - name: Terraform Apply
-      if: github.event_name == 'push' # Only auto-apply on pushes
-      run: terraform apply -auto-approve tfplan
+      run: terraform apply -auto-approve
