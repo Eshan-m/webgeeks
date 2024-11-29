@@ -2,7 +2,14 @@ provider "azurerm" {
   features {}
   subscription_id = "f5dac2a4-4260-4510-8cd5-55145975adfb"
 }
-
+terraform {
+  backend "azurerm" {
+      resource_group_name  = "capstone"
+      storage_account_name = "capstoness"
+      container_name       = "terraform-state"
+      key                  = "terraform.tfstate"
+  }
+}
 # Variables
 variable "admin_username" {
   description = "Admin username for the VM"
