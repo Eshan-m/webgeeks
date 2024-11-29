@@ -22,10 +22,10 @@ jobs:
         terraform_version: 1.5.0 # Adjust based on your Terraform version
 
     # Authenticate with Azure
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    # - name: Azure Login
+    #   uses: azure/login@v1
+    #   with:
+    #     creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     # Initialize Terraform
     - name: Authenticate with Azure using Service Principal
