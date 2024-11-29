@@ -55,7 +55,7 @@ export class FoodlistComponent implements OnInit {
       Swal.fire('Enter a valid Quantity', 'Quantity Exceeded', 'error');
     } else {
 
-      if (this.qty > this.pickupQuantity) {
+      if (this.qty >= this.pickupQuantity) {
 
         this.service.Orderfood(this.selectedFoodId, localStorage.getItem("Username"), this.pickupQuantity).subscribe((res) => {
           console.log(res);
