@@ -1,8 +1,15 @@
+
 provider "azurerm" {
   features {}
   subscription_id = "f5dac2a4-4260-4510-8cd5-55145975adfb"
 }
 terraform {
+    required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=4.1.0"
+    }
+  }
   backend "azurerm" {
       resource_group_name  = "capstone"
       storage_account_name = "capstoness"
