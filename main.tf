@@ -1,3 +1,6 @@
+provider "aws" {
+  region = "us-west-2"
+}
 
 provider "azurerm" {
   features {}
@@ -10,11 +13,11 @@ terraform {
       version = "=4.1.0"
     }
   }
-  backend "azurerm" {
-      resource_group_name  = "capstone"
-      storage_account_name = "capstoness"
-      container_name       = "terraform-state"
-      key                  = "terraform.tfstate"
+  backend "s3" {
+    bucket         = "capstoness"
+    key            = "terraform/state/azure-resources.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
   }
 }
 # Variables
