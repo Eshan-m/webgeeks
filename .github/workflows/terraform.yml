@@ -28,8 +28,17 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     # Initialize Terraform
-    - name: Terraform Init
-      run: terraform init
+    - name: Authenticate with Azure using Service Principal
+      run: |
+       export ARM_CLIENT_ID=$AZURE_CLIENT_ID
+       export ARM_CLIENT_SECRET=$AZURE_CLIENT_SECRET
+       export ARM_TENANT_ID=$AZURE_TENANT_ID
+       export ARM_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID
+       terraform init
+
+    
+    # - name: Terraform Init
+    #   run: terraform init
 
     - name: Terraform Destroy
       run: terraform destroy -auto-approve
