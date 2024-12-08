@@ -14,7 +14,7 @@ Built with scalability and maintainability in mind, suitable for deployment in d
 ## Technologies Used
 Frontend: Angular
 Backend: C# (.NET Framework)
-Database: Microsoft SQL Server
+Database: Microsoft SQL Server temp
 
 ## Setup Instructions
 Clone the repository
