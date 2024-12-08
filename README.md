@@ -17,7 +17,7 @@ Backend: C# (.NET Framework)
 Database: Microsoft SQL Server
 
 ## Setup Instructions
-Clone the repository temp
+Clone the repository
 ```
 git clone https://github.com/Eshan-m/webgeeks.git  
 cd webgeeks
